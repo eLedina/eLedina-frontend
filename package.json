@@ -1,0 +1,35 @@
+{
+  "name": "e-ledina",
+  "version": "1.0.0",
+  "description": "Spletna stran e-ledina.si",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefaltSimon/eLedina"
+  },
+  "author": "Ledinska zabušantska sekcija",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/DefaltSimon/eLedina/eLedina-frontend/issues"
+  },
+  "homepage": "https://github.com/DefaltSimon/eLedina/eLedina-frontend#readme",
+  "devDependencies": {
+    "browser-sync": "^2.13.0",
+    "del": "^2.2.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-flatten": "^0.3.0",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-sftp": "^0.1.5",
+    "gulp-sourcemaps": "^1.6.0",
+    "run-sequence": "^2.2.0",
+    "gulp-watch": "^4.3.8",
+    "gulp-twig": "^1.1.1"
+  }
+}
