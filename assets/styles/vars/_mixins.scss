@@ -1,0 +1,65 @@
+/*----------------------------------*\
+    mixins
+\*----------------------------------*/
+
+/* Transitions */
+@mixin transition($args: 200ms) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+/* Transforms */
+@mixin transform($args) {
+    -webkit-transform: $args;
+    -moz-transform: $args;
+    -ms-transform: $args;
+    -o-transform: $args;
+    transform: $args;
+}
+
+/*Gradiant color transitions*/
+@mixin gradient($args) {
+    -moz-linear-gradient: $args;
+    -webkit-gradient: $args;
+    -webkit-linear-gradient: $args;
+    -o-linear-gradient: $args;
+    gradient: $args;
+}
+
+/* Box-shaddow */
+@mixin box-shadow($args) {
+    -webkit-box-shadow: $args;
+    -moz-box-shadow: $args;
+    -ms-box-shadow: $args;
+    -o-box-shadow: $args;
+    box-shadow: $args;
+}
+
+/* Animation fill mode: forwards keeps last frame of animation */
+@mixin animation-fill-mode($args: forwards) {
+    -webkit-animation: $args;
+    -moz-animation-fill-mode: $args;
+    -ms-animation-fill-mode: $args;
+    -o-animation: $args;
+    animation: $args;
+}
+
+@mixin transform-origin($args) {
+    -webkit-transform: $args;
+    -moz-transform: $args;
+    -ms-transform: $args;
+    -o-transform: $args;
+    transform: $args;
+}
+
+/*Column: Splits text into columns */
+@mixin column-count($args) {
+    -webkit-column-count: $args;
+    -moz-column-count: $args;
+    -ms-column-count: $args;
+    -o-column: $args;
+    column: $args;
+}
