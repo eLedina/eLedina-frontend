@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <!-- page details -->
+    <meta name="description" content="">
+    <meta name="keywords" content="eledina,ledina,gimnazija,šola,slovenia,ljubljana">
+    <meta name="author" content="Bebci z E-Ledine">
+
+    <!-- visual info -->
+    <title>E-Ledina - {% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="">
+    <meta name="theme-color" content="#161616">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+    <!-- css -->
+    <link href="scripts/main.css" rel="stylesheet">
+</head>
+
+
+<body>
+    {% include "header.twig" %}
+
+    <main>
+        {% block body %}
+        {% endblock %}
+
+        {% block footer %}
+            <footer>
+                <div>
+                    <p>Copyright &copy; 2018</p>
+                </div>
+            </footer>
+        {% endblock %}
+    </main>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="scripts/main.js"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+
+
+</html>
