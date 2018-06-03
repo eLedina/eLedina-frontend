@@ -8,10 +8,18 @@ const browserSync = require('browser-sync'),
       sourcemaps = require('gulp-sourcemaps'),
       watch = require('gulp-watch'),
       del = require('del'),
+      fs = require("fs"),
+      fse = require("fs-extra"),
       runSequence = require("run-sequence");
 
+// If config.js doesn't exist, copy the template from config.js.example
+if (!fs.existsSync("config.js")) {
+    fse.copySync("config.js.example", "config.js");
+    //fs.createReadStream("config.js.example").pipe(fs.createWriteStream("config.js"))
+}
+
 // Import custom paths
-const config = require("config.js");
+const config = require("./config.js");
 
 gulp.task('clean', function () {
    return del([config.templates + "**", config.static + "**"], {force: true, dryRun: config.debug})
@@ -74,7 +82,7 @@ gulp.task('images', function() {
 
 // Templates
 gulp.task('copyHtml', function () {
-    return gulp.src(config.src + "templates/")
+    return gulp.src(config.src + "templates/**/*")
         .pipe(gulp.dest(config.templates))
 });
 
