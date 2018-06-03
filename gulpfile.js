@@ -1,93 +1,86 @@
 const browserSync = require('browser-sync'),
-    gulp = require('gulp'),
-    autoPrefixer = require('gulp-autoprefixer'),
-    concat = require('gulp-concat'),
-    flatten = require('gulp-flatten'),
-    cssNano = require('gulp-cssnano'),
-    imageMin = require('gulp-imagemin'),
-    sass = require('gulp-sass'),
-    sftp = require('gulp-sftp'),
-    sourcemaps = require('gulp-sourcemaps'),
-    watch = require('gulp-watch'),
-    runSequence = require("run-sequence"),
-    twig = require("gulp-twig");
+      gulp = require('gulp'),
+      autoPrefixer = require('gulp-autoprefixer'),
+      flatten = require('gulp-flatten'),
+      cssNano = require('gulp-cssnano'),
+      imageMin = require('gulp-imagemin'),
+      sass = require('gulp-sass'),
+      sourcemaps = require('gulp-sourcemaps'),
+      watch = require('gulp-watch'),
+      del = require('del'),
+      runSequence = require("run-sequence");
 
-// Paths
-let paths = {
-    dist: '.dist',
-    static_dist: ".dist",
-    src: './assets/'
-};
+// Import custom paths
+const config = require("config.js");
 
-// Clean
-gulp.task("clean", function(callback) {
-    runSequence(
-        "clean_templates",
-        "clean_static",
-        callback
-    )
+gulp.task('clean', function () {
+   return del([config.templates + "**", config.static + "**"], {force: true, dryRun: config.debug})
 });
-
-gulp.task('clean_templates', require('del').bind(null, [paths.dist]));
-gulp.task('clean_static', require('del').bind(null, [paths.static_dist]));
 
 
 // Styles
 gulp.task('styles', function() {
-    return gulp.src(paths.src + 'styles/**/*.scss')
+    return gulp
+        .src(config.src + 'styles/**/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(autoPrefixer({
             browsers: [
                 'last 2 version',
-                'android 2.3',
-                'android 4',
+                'not dead',
+                '> 0.5%',
                 'opera 12'
             ]
         }))
         .pipe(cssNano())
         .pipe(sourcemaps.write('sourcemaps'))
-        .pipe(gulp.dest(paths.static_dist + 'css'))
+        .pipe(gulp.dest(config.static + 'styles'))
         .pipe(browserSync.stream());
 });
 
 
 // Scripts
 gulp.task('scripts', function() {
-    return gulp.src(paths.src + 'scripts/**/*.js')
+    return gulp
+        .src(config.src + 'scripts/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(sourcemaps.write('sourcemaps'))
-        .pipe(gulp.dest(paths.static_dist + 'javascript'))
+        .pipe(gulp.dest(config.static + 'scripts'))
         .pipe(browserSync.stream());
 });
 
 
 // Images
 gulp.task('images', function() {
-    return gulp.src(paths.src + 'images/*')
-        .pipe(imageMin({
-            progressive: true,
-            interlaced: true,
-            svgoPlugins: [{removeUnknownsAndDefaults: false}, {cleanupIDs: false}]
-        }))
-        .pipe(gulp.dest(paths.static_dist + 'images'))
+    return gulp
+        .src(config.src + 'images/*')
+        .pipe(imageMin([
+            imageMin.gifsicle({interlaced: true}),
+            imageMin.jpegtran({progressive: true}),
+            imageMin.optipng({optimizationLevel: 3}),
+            imageMin.svgo({
+                plugins: {
+                    removeViewBox: true,
+                    cleanupIDs: false,
+                    removeUnknownsAndDefaults: false
+                }
+            })
+            ]
+        ))
+        .pipe(gulp.dest(config.static + 'images'))
         .pipe(browserSync.stream());
 });
 
 
 // Templates
-gulp.task('twigIncludeMain', function() {
-    return gulp.src(paths.src + 'templates/*.twig')
-        .pipe(twig({
-            extname: ".html"
-        }))
-        .pipe(gulp.dest(paths.dist))
-        .pipe(browserSync.stream());
+gulp.task('copyHtml', function () {
+    return gulp.src(config.src + "templates/")
+        .pipe(gulp.dest(config.templates))
 });
 
 gulp.task('html', function(callback) {
     runSequence(
-        "twigIncludeMain",
+        "copyHtml",
         callback
     )
 });
@@ -95,9 +88,10 @@ gulp.task('html', function(callback) {
 
 // Fonts
 gulp.task('fonts', function() {
-    return gulp.src(paths.src + 'fonts/*')
+    return gulp
+        .src(config.src + 'fonts/*')
         .pipe(flatten())
-        .pipe(gulp.dest(paths.static_dist + 'fonts'))
+        .pipe(gulp.dest(config.static + 'fonts'))
         .pipe(browserSync.stream());
 });
 
@@ -123,19 +117,6 @@ gulp.task('default', function() {
     );
 });
 
-
-// Special task that is like default but does not clean
-gulp.task('deploy', function(callback) {
-    runSequence(
-        'styles',
-        'scripts',
-        'fonts',
-        'images',
-        'html',
-        callback);
-});
-
-
 // Gulp watch - watch changes of files in 'src' folder (run it by 'gulp watch')
 gulp.task('watch', function() {
 
@@ -149,10 +130,6 @@ gulp.task('watch', function() {
 //            "./assets/**/*.{html,js,scss}"
 //        ]
 //    });
-
-//gulp.task('clean', function (done) {
-//  $.del(['.tmp', 'dist'], done);
-//});
 
     gulp.watch('./assets/templates/**/*', ['html']);
     gulp.watch('./assets/scripts/**/*', ['scripts']);

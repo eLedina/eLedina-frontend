@@ -1,0 +1,17 @@
+// THIS IS AN EXAMPLE FILE, please copy as "paths.js"
+
+////////////////
+// config.js - configuration for gulpfile.js
+////////////////
+
+module.exports = {
+    src: "./assets/",
+
+    // set your custom template and static folder
+    templates: "../eLedina-backend/templates/",
+    static: "../eLedina-backend/static/",
+
+
+    // turn only for debugging stuff
+    debug: false
+};
