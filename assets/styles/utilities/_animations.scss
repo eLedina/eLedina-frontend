@@ -30,3 +30,23 @@ $ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
         transform: translateX(4px);
     }
 }
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slidein {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}

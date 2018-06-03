@@ -15,7 +15,7 @@ body {
     height: 100vh;
     //color: $color-black;
     //font-size: 14px;
-    //font-family: $font-primary;
+    font-family: $font-primary;
 }
 section {
     position: relative;
@@ -79,7 +79,7 @@ img {
 }
 a {
     text-decoration: none;
-    color: inherit;
+    color: $color-orange;
 }
 button {
     border: 0;
@@ -103,6 +103,8 @@ form {
 p {
     // Disabled 10px on bottom
     margin: 0 0 0;
+    font-family: $font-secondary;
+    text-align: justify;
 }
 ::-moz-focus-inner {
     border: 0;
