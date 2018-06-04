@@ -5,15 +5,11 @@
 /* color variables */
 $color-white: #fff;
 $color-black: #000;
-$color-gray: #3b3e43;
-$color-blue: #80bfff;
-$color-darkblue: #004d99;
-$color-orange: #ffb31a;
-$color-magenta: #3333cc;
 
 /* colors you want to include in text and background */
 $colors: (
     "white": $color-white,
+    "black": $color-black,
 );
 
 

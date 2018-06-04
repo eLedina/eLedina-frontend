@@ -12,31 +12,10 @@
 }
 */
 
-@font-face {
-    font-family: Roboto;
-    src: url('../fonts/Roboto-Regular.ttf');
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: Raleway;
-    src: url('../fonts/Raleway-Regular.ttf');
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: PTSans;
-    src: url('../fonts/PT_Sans-Web-Regular.ttf');
-    font-weight: 400;
-}
-
-@font-face {
-}
-
 /* Font Families */
-$font-primary: "Roboto";
-$font-secondary: "Raleway";
-$font-tertiary: "PTSans";
+$font-primary: "Lato";
+$font-secondary: "Roboto";
+$font-tertiary: sans-serif;
 
 /* Font Weights */
 $light: 300;
