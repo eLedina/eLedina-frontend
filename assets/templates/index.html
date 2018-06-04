@@ -2,28 +2,77 @@
 {% block title %}Predpražnik{% endblock %}
 {% block content %}
 
-<div class="body flex flex--around body__landing--background flex--middle">
-    <div class="text--center body__landing--title">
-        <h1 class="body__titles--primary text-center text--white">eLedina.si</h1>
-        <h2 class="body__titles--secondary text-center text--white">Spletna stran dijakov gimnazije Ledina</h2>
-    </div>
-    <div class="body__landing">
-        <h2 class="body__titles--secondary">Živjo!</h2>
-        <p>Dobrodošel/la na eLedina.si, kjer se zgodijo vse čarobne reči! Če nam duše še nisi prodal/a, klikni na velik gumb za registracijo. Če pa si že član/ica, se lahko kar prijaviš.</p>
-        <div class="flex flex--around mt30">
-            <a href="#">
-                <svg style="" viewBox="0 0 24 24">
-                    <path fill="#000000" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" />
-                </svg>
-                REGISTRACIJA
-            </a>
-            <a href="#">
-                <svg style="" viewBox="0 0 24 24">
-                    <path fill="#000000" d="M10,17.25V14H3V10H10V6.75L15.25,12L10,17.25M8,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H8A2,2 0 0,1 6,20V16H8V20H17V4H8V8H6V4A2,2 0 0,1 8,2Z" />
-                </svg>
-                PRIJAVA
-            </a>
+<h1>Dizajn</h1>
+
+<div class="">
+    <h2>Gumbki</h2>
+        <div class="">
+            <button type="button" name="button">REGISTRACIJA</button>
+            <button type="button" name="button">VPIS</button>
         </div>
+</div>
+
+<div class="">
+    <h2>Inputi</h2>
+    <div class="">
+        <form>
+            <input type="text" name="" value="Vpisno polje">
+        </form>
+        <form>
+            <input type="radio" name="gender" value="male">Deček
+            <input type="radio" name="gender" value="female">Deklica
+            <input type="radio" name="gender" value="other">Drugo
+        </form>
+        <form>
+            <input type="checkbox" name="shit1" value="depresso">Imam depresijo.
+            <input type="checkbox" name="shit2" value="enxiety">Imam socialno tesnobo.
+        </form>
+        <form>
+            <input type="color" name="fabcolor">
+        </form>
+        <form>
+            <input type="date" name="bday">
+        </form>
+        <form>
+            <input type="number" name="quantity" min="1" max="20">
+        </form>
+        <form>
+             <input type="range" name="points" min="0" max="20" step="0.1">
+        </form>
+    </div>
+</div>
+
+<div class="">
+    <h2>Tekst</h2>
+    <div class="">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p><b>Drzni tekst</b></p>
+        <p><i>Italijanski tekst</i></p>
+        <p>In tukaj je en <a href="#">link</a>.</p>
+    </div>
+</div>
+
+<div class="">
+    <h2>Nekaj drugih zadev</h2>
+    <div class="">
+        <table>
+            <tr>
+                <th>To je glavna celica</th>
+                <th>In tukaj je še ena</th>
+            </tr>
+            <tr>
+                <td>To je normalna celica</td>
+                <td>In tukaj neko drugo sranje</td>
+            </tr>
+        </table>
+        <ul>
+            <li>To je neurejen seznam</li>
+            <li>Pod njim je še en item</li>
+        </ul>
+        <ol>
+            <li>In tole je urejen seznam</li>
+            <li>In še več itemov (sej bi rekel "enot", pa nihče ne bi razumel)</li>
+        </ol>
     </div>
 </div>
 
