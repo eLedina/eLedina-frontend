@@ -2,4 +2,43 @@
     Buttons
 \*----------------------------------*/
 .btn {
+    &__main {
+        padding: 5px 15px;
+        border-radius: 2px;
+        display: flex;
+        font-family: "Nunito";
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 3px 3px transparentize($color-black, 0.8);
+        letter-spacing: 1px;
+        font-weight: bold;
+        margin: 5px;
+        @include transition();
+
+        svg {
+            margin-right: 10px;
+        }
+
+
+        &--green {
+            background-color: lighten($color-fern-green, 10);
+            color: $color-white;
+            path {
+                fill: $color-white;
+            }
+        }
+        &--blue {
+            background-color: lighten($color-blue, 10);
+            color: $color-white;
+            path {
+                fill: $color-white;
+            }
+        }
+
+        &:hover {
+            box-shadow: 0 3px 5px transparentize($color-black, 0.8);
+            //transform: scale(1.1);
+            filter: brightness(120%);
+        }
+    }
 }

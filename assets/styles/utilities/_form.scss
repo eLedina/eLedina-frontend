@@ -9,3 +9,110 @@ input {
 textarea{
 	resize: vertical;
 }
+
+.textinput {
+	font-size: 18px;
+	position: relative;
+	margin: 5px auto;
+
+	input {
+		font-size: 18px;
+		padding: 10px 10px;
+		border: 0px;
+		border-bottom: 2px solid darken($color-beige, 20);
+		color: $color-jungle-green;
+		font-weight: bold;
+		display: block;
+		width: 100%;
+		@include transition();
+	}
+
+	label {
+		position: absolute;
+		left: 10px;
+		top: 6px;
+		color: darken($color-beige, 20);
+		pointer-events:none;
+		@include transition();
+	}
+
+	input:focus ~ label, input:valid ~ label {
+		top: -11px;
+		font-size: 12px;
+		color: $color-blue;
+	}
+
+	input:focus, input:valid {
+		border-bottom: 2px solid $color-blue;
+	}
+
+	input:invalid {
+    	box-shadow: none;
+	}
+}
+
+.radio {
+
+	label {
+		margin: 10px 0;
+		display: flex;
+		align-items: center;
+		position: relative;
+		cursor: pointer;
+		user-select: none;
+		padding: 0 34px;
+		font-size: 20px;
+		height: 26px;
+	}
+
+	input {
+		opacity: 0;
+		position: absolute;
+		cursor: pointer;
+	}
+	input:checked + span::before{
+		transform: scale(1);
+	}
+	input:checked + span {
+		border: 3px solid $color-blue;
+	}
+
+	span {
+		position: absolute;
+		top: 0;
+		left: 0;
+		border-radius: 50%;
+		height: 26px;
+		width: 26px;
+		border: 3px solid $color-beige;
+		@include transition();
+
+		&::before {
+			content: "";
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background-color: $color-blue;
+			position: absolute;
+			top: 3px;
+			left: 3px;
+			transform: scale(0);
+			@include transition();
+		}
+	}
+}
+
+.checkbox {
+
+	label {
+		margin: 10px 0;
+		display: flex;
+		align-items: center;
+		position: relative;
+		cursor: pointer;
+		user-select: none;
+		padding: 0 34px;
+		font-size: 20px;
+		height: 26px;
+	}
+}
