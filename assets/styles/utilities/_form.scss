@@ -20,9 +20,9 @@ textarea {
 		border: 0;
 		border-bottom: 2px solid darken($color-beige, 20);
 		color: $color-jungle-green;
-		font-weight: bold;
 		display: block;
 		width: 100%;
+		font-size: 1.1em;
 		@include transition();
 	}
 
@@ -48,21 +48,21 @@ textarea {
 	input:invalid {
     	box-shadow: none;
 	}
-	
+
 	span.err {
 		position: absolute;
 		top: 95%;
-		
+
 		font-size: 0.75em;
 		font-weight: $bold;
-		
+
 		left: 10px;
 		color: $color-red;
 		// by default hidden
 		opacity: 0;
 		@include transition(.1s);
 	}
-	
+
 	// Add .invalid class to display error
 	&.invalid {
 		span.err {
@@ -73,7 +73,6 @@ textarea {
 }
 
 .radio {
-
 	label {
 		margin: 10px 0;
 		display: flex;
@@ -135,5 +134,122 @@ textarea {
 		padding: 0 34px;
 		font-size: 20px;
 		height: 26px;
+	}
+
+	input {
+		position: absolute;
+		cursor: pointer;
+		opacity: 0;
+	}
+
+	span {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 25px;
+		height: 25px;
+		background-color: $color-white;
+		border-radius: 2px;
+		border: 2px solid $color-beige;
+		@include transition();
+
+		&::after {
+			content: "";
+			position: absolute;
+			left: 6px;
+			top: -1px;
+			width: 10px;
+			height: 20px;
+			border: solid $color-blue;
+			border-width: 0 3px 3px 0;
+			transform: rotate(45deg);
+			opacity: 0;
+			@include transition();
+		}
+	}
+
+	input:checked + span::after {
+		opacity: 1;
+	}
+
+	input:checked + span {
+		border: 2px solid $color-blue;
+	}
+}
+
+.colorpicker {
+	input {
+		border-radius: 4px;
+		border: 2px solid $color-beige;
+		background-color: lighten($color-beige, 10);
+		box-shadow: 0 0 0;
+		width: 100px;
+		height: 40px;
+		padding: 10px 5px;
+		cursor: pointer;
+		@include transition();
+
+		&:hover {
+			background-color: $color-beige;
+			border-color: darken($color-beige, 10);
+		}
+	}
+}
+
+.datepicker {
+	input {
+		font-size: 1.1em;
+		font-family: $font-secondary;
+		padding: 10px 10px 5px 10px;
+		border: 0;
+		border-bottom: 2px solid darken($color-beige, 20);
+		color: $color-jungle-green;
+		width: 100%;
+		@include transition();
+	}
+}
+
+.numberpicker {
+	input {
+		font-size: 1.1em;
+		font-family: $font-secondary;
+		padding: 10px 10px 5px 10px;
+		border: 0;
+		border-bottom: 2px solid darken($color-beige, 20);
+		color: $color-jungle-green;
+		width: 100%;
+		@include transition();
+	}
+}
+
+.slider {
+	input {
+		-webkit-appearance: none;
+    	width: 100%;
+    	height: 10px;
+    	border-radius: 5px;
+    	background: $color-beige;
+    	outline: none;
+    	opacity: 0.7;
+    	-webkit-transition: .2s;
+    	transition: opacity .2s;
+
+		&::-webkit-slider-thumb {
+    		width: 20px;
+    		height: 20px;
+    		border-radius: 50%;
+    		background-color: lighten($color-blue, 10);
+			border: 4px solid darken($color-blue, 10);
+    		cursor: pointer;
+		}
+
+		&::-moz-range-thumb {
+		    width: 20px;
+		    height: 20px;
+		    border-radius: 50%;
+		    background-color: lighten($color-blue, 10);
+			border: 4px solid darken($color-blue, 10);
+		    cursor: pointer;
+		}
 	}
 }
