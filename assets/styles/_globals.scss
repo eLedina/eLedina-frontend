@@ -32,8 +32,22 @@ ul {
     margin-bottom: 0;
     padding-left: 0;
 }
+ol {
+    position: relative;
+    li::before {
+        position: absolute;
+        content: "";
+        border-radius: 50%;
+        background-color: $color-beige;
+        height: 27px;
+        width: 27px;
+        z-index: -1;
+        left: -25px;
+    }
+}
 li {
-    display: block;
+    padding: 0 3px;
+    margin: 5px 0;
 }
 dl {
     margin-top: 0;

@@ -15,6 +15,11 @@
 
     a {
         position: relative;
+        color: $color-white;
+
+        &::before {
+            background-color: $color-white;
+        }
     }
 
     a::after {
