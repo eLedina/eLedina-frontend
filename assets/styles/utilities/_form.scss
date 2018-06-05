@@ -6,19 +6,18 @@
 input {
 	outline: none;
 }
-textarea{
+textarea {
 	resize: vertical;
 }
 
-.textinput {
-	font-size: 18px;
+.input {
+	font-size: 1.1em;
 	position: relative;
-	margin: 5px auto;
+	//margin: 5px auto;
 
 	input {
-		font-size: 18px;
 		padding: 10px 10px;
-		border: 0px;
+		border: 0;
 		border-bottom: 2px solid darken($color-beige, 20);
 		color: $color-jungle-green;
 		font-weight: bold;
@@ -48,6 +47,28 @@ textarea{
 
 	input:invalid {
     	box-shadow: none;
+	}
+	
+	span.err {
+		position: absolute;
+		top: 95%;
+		
+		font-size: 0.75em;
+		font-weight: $bold;
+		
+		left: 10px;
+		color: $color-red;
+		// by default hidden
+		opacity: 0;
+		@include transition(.1s);
+	}
+	
+	// Add .invalid class to display error
+	&.invalid {
+		span.err {
+			opacity: 1;
+			animation: shake 1s;
+		}
 	}
 }
 

@@ -14,8 +14,8 @@
         <div class="flex flex--column flex--middle">
             <h2 class="body__titles--secondary">Gumbki</h2>
                 <div class="flex flex--column flex--middle flex--center">
-                    <button type="button" name="button" class="btn__main green">REGISTRACIJA</button>
-                    <button type="button" name="button" class="btn__main blue">
+                    <button type="button" class="btn__main green">REGISTRACIJA</button>
+                    <button type="button" class="btn__main blue">
                         {{ svgs.accessPoint() }} VPIS
                     </button>
                 </div>
@@ -23,13 +23,21 @@
 
         <div class="">
             <h2 class="body__titles--secondary">Inputi</h2>
-            <div class="">
-                <form>
-                    <div class="textinput">
+            <div>
+                <!-- Text Input -->
+                <div class="mb30">
+                    <form class="mb30 mt10">
+                    <div class="input" id="inp">
                         <input type="text" required>
                         <label>Vpisno polje</label>
+                        <span class="err">Preveri geslo</span>
                     </div>
-                </form>
+                    </form>
+                    <!-- toggle invalid -->
+                    <button type="button" class="btn__main blue" onclick="$('#inp').toggleClass('invalid')">Toggle 'invalid' for input above</button>
+                </div>
+
+                <!-- Radio butons -->
                 <form class="radio">
                     <label>Deček
                         <input type="radio" name="gender" value="male">
@@ -44,6 +52,8 @@
                         <span></span>
                     </label>
                 </form>
+
+                <!-- Checkboxes -->
                 <form class="checkbox">
                     <label>Trpim za depresijo.
                         <input type="checkbox" name="shit1" value="depresso">
@@ -54,6 +64,8 @@
                         <span></span>
                     </label>
                 </form>
+
+                <!-- Other inputs -->
                 <form>
                     <input type="color" name="fabcolor">
                 </form>
