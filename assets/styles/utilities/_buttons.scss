@@ -6,7 +6,7 @@
         padding: 5px 15px;
         border-radius: 2px;
         display: flex;
-        font-family: "Nunito";
+        font-family: $font-secondary, $font-tertiary;
         justify-content: center;
         align-items: center;
         box-shadow: 0 3px 3px transparentize($color-black, 0.8);
@@ -20,14 +20,14 @@
         }
 
 
-        &--green {
+        &.green {
             background-color: lighten($color-fern-green, 10);
             color: $color-white;
             path {
                 fill: $color-white;
             }
         }
-        &--blue {
+        &.blue {
             background-color: lighten($color-blue, 10);
             color: $color-white;
             path {
