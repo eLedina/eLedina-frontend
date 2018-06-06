@@ -2,5 +2,58 @@
     Header
 \*----------------------------------*/
 .header {
-    
+    height: 100px;
+    background-color: lighten($color-fern-green, 30);
+
+    a {
+        font-size: 1.5em;
+        margin: 0 10px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        color: $color-white;
+        @include transition();
+
+        &::before {
+            display: none;
+        }
+
+        &:hover {
+            svg {
+                transform: scale(0.5) translateY(-30px);
+                path {
+                    fill: darken($color-white, 5);
+                }
+            }
+            span {
+                transform: scale(1);
+                color: darken($color-white, 5);
+            }
+        }
+
+        svg {
+            height: 100px;
+            @include transition();
+
+            path {
+                fill: $color-white;
+            }
+        }
+
+        span {
+            position: absolute;
+            bottom: 0;
+            transform: scale(0);
+            @include transition();
+        }
+    }
+
+    div {
+        height: 100%;
+
+        img {
+            height: 100%;
+        }
+    }
+
 }

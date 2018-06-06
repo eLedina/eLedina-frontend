@@ -1,3 +1,31 @@
-<div class="">
+{% import "macros/svgs.html" as svgs %}
 
-</div>
+<nav class="flex flex--around flex--middle header">
+    <div class="">
+        <img src="{{ url_for('static', filename='images/eledina_icon_header.png') }}" alt="">
+    </div>
+    <div class="flex flex--middle flex--center header__links">
+
+        <a href="home">
+            {{ svgs.home() }}
+            <span>Domov</span>
+        </a>
+        <a href="#">
+            {{ svgs.ucenje() }}
+            <span>Učenje</span>
+        </a>
+        <a href="#">
+            {{ svgs.dogodki() }}
+            <span>Dogodki</span>
+        </a>
+        <a href="#">
+            {{ svgs.seznami() }}
+            <span>Seznami</span>
+        </a>
+        <a href="#">
+            {{ svgs.blog() }}
+            <span>Blog</span>
+        </a>
+
+    </div>
+</nav>
