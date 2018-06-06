@@ -1,0 +1,136 @@
+{% extends "skeletons/base.html" %}
+
+<!-- imports -->
+{% import "macros/svgs.html" as svgs %}
+
+{% block title %}Predpražnik{% endblock %}
+{% block content %}
+
+<h1 class="body__titles--terciary text-center">Dizajn</h1>
+
+<div class="flex flex--column">
+
+    <div class="flex flex--around">
+        <div class="flex flex--column flex--middle">
+            <h2 class="body__titles--secondary">Gumbki</h2>
+                <div class="flex flex--column flex--middle flex--center">
+                    <button type="button" class="btn__main green">REGISTRACIJA</button>
+                    <button type="button" class="btn__main blue">
+                        {{ svgs.accessPoint() }} VPIS
+                    </button>
+                </div>
+        </div>
+
+        <div class="">
+            <h2 class="body__titles--secondary">Inputi</h2>
+            <div>
+                <!-- Text Input -->
+                <div class="mb30">
+                    <form class="mb30 mt10">
+                    <div class="input" id="inp">
+                        <input type="text" required>
+                        <label>Vpisno polje</label>
+                        <span class="err">Preveri geslo</span>
+                    </div>
+                    </form>
+                    <!-- toggle invalid -->
+                    <button type="button" class="btn__main blue" onclick="$('#inp').toggleClass('invalid')">Toggle 'invalid' for input above</button>
+                </div>
+
+                <!-- Radio butons -->
+                <form class="radio">
+                    <label>Deček
+                        <input type="radio" name="gender" value="male">
+                        <span></span>
+                    </label>
+                    <label>Deklica
+                        <input type="radio" name="gender" value="female">
+                        <span></span>
+                    </label>
+                    <label>Drugo
+                        <input type="radio" name="gender" value="other">
+                        <span></span>
+                    </label>
+                </form>
+
+                <!-- Checkboxes -->
+                <form class="checkbox">
+                    <label>Trpim za depresijo.
+                        <input type="checkbox" name="shit1" value="depresso">
+                        <span></span>
+                    </label>
+                    <label>Imam socialno tesnobo.
+                        <input type="checkbox" name="shit2" value="enxiety">
+                        <span></span>
+                    </label>
+                </form>
+
+                <!-- Other inputs -->
+                <form class="colorpicker">
+                    <input type="color" name="fabcolor">
+                </form>
+                <form class="datepicker">
+                    <input type="date" value="DD - MM - LLLL" name="bday">
+                </form>
+                <form class="numberpicker">
+                    <input type="number" name="quantity" min="1" max="20">
+                </form>
+                <form class="slider">
+                     <input type="range" name="points" min="0" max="20" step="0.1">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex--center">
+        <div class="">
+            <h2 class="body__titles--secondary">Tekst</h2>
+            <div class="">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p><b>Drzni tekst</b></p>
+                <p><i>Italijanski tekst</i></p>
+                <p>In tukaj je en <a href="#">link</a>.</p>
+                <p>Pa še en tekst, da vidim, kako se link obnese.</p>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="body__titles--secondary">Nekaj drugih zadev</h2>
+            <div>
+                <table class="table">
+                    <tr class="table--head">
+                        <th>Št.</th>
+                        <th>To je glavna celica</th>
+                        <th>In tukaj je še ena</th>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td>5</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+                <ul>
+                    <li>To je neurejen seznam</li>
+                    <li>Pod njim je še en item</li>
+                </ul>
+                <ol>
+                    <li>In tole je urejen seznam</li>
+                    <li>In še več itemov (sej bi rekel "enot", pa nihče ne bi razumel)</li>
+                    <li>In še več itemov (sej bi rekel "enot", pa nihče ne bi razumel)</li>
+                </ol>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

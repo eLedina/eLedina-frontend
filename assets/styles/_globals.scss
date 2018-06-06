@@ -96,6 +96,7 @@ a {
     color: $color-fern-green;
     font-weight: bold;
     position: relative;
+    font-size: inherit;
 
     &::before {
         content: "";
@@ -135,6 +136,7 @@ p {
     margin: 0 0 0;
     font-family: $font-secondary;
     text-align: justify;
+    font-size: 18px;
 }
 ::-moz-focus-inner {
     border: 0;

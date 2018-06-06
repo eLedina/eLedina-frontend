@@ -1,0 +1,29 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Predpražnik{% endblock %}
+{% block content %}
+
+<div class="body flex flex--column flex--center">
+    <div class="flex flex--center mb30">
+        <h1>Prijava</h1>
+    </div>
+    <div class="flex flex--center">
+        <div class="body__login">
+            <form class="mb30 mt10 flex flex--column flex--middle" method="post">
+                <div class="input" id="inp">
+                    <input type="text" name="username" required>
+                    <label>Uporabniško ime</label>
+                    <span class="err">Vpiši uporabniško ime!</span>
+                </div>
+                <div class="input" id="inp">
+                    <input type="password" name="password" required>
+                    <label>Geslo</label>
+                    <span class="err">Vpiši geslo!</span>
+                </div>
+                <button type="submit" value="logIn" class="btn__main blue">PRIJAVI ME</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
