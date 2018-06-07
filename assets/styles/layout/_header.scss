@@ -11,7 +11,7 @@
         position: relative;
         display: flex;
         justify-content: center;
-        color: $color-white;
+        color: lighten($color-blue, 20);
         @include transition();
 
         &::before {
@@ -22,12 +22,12 @@
             svg {
                 transform: scale(0.5) translateY(-30px);
                 path {
-                    fill: darken($color-white, 5);
+                    fill: $color-blue;
                 }
             }
             span {
                 transform: scale(1);
-                color: darken($color-white, 5);
+                color: $color-blue;
             }
         }
 
@@ -36,7 +36,7 @@
             @include transition();
 
             path {
-                fill: $color-white;
+                fill: darken($color-blue, 20);
             }
         }
 

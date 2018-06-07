@@ -1,0 +1,42 @@
+/*----------------------------------*\
+ Blog styling
+\*----------------------------------*/
+
+.blog {
+    margin: 30px 15%;
+    box-shadow: 0 0 10px transparentize($color-black, 0.5);
+    padding: 10px 20px;
+
+    h2 {
+        font-size: 3em;
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 2em;
+    }
+
+    p,a {
+        font-size: 1.4em;
+    }
+
+    &__posts {
+        border-top: 1px solid $color-jungle-green;
+        padding: 0 20%;
+
+        &--month {
+            width: 200px;
+        }
+
+        &--dates {
+            div {
+                margin: 25px 10%;
+            }
+
+            a {
+                margin-left: 30px;
+            }
+        }
+    }
+
+}

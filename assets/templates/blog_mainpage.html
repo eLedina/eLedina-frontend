@@ -1,0 +1,62 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+
+<header>
+    {% include "skeletons/header.html" %}
+</header>
+
+<div class="">
+    <h1 class="text-center">Blog</h1>
+
+    <div class="blog">
+        <h2>2018</h2>
+
+        <div class="">
+
+            <div class="blog__posts">
+                <div class="blog__posts--month">
+                    <h3>Junij</h3>
+                </div>
+                <div class="blog__posts--dates">
+                    <div class="flex">
+                        <p>30.</p>
+                        <a href="#">Test #1</a>
+                    </div>
+                    <div class="flex">
+                        <p>29.</p>
+                        <a href="#">Test #2</a>
+                    </div>
+                    <div class="flex">
+                        <p>28.</p>
+                        <a href="#">Test #3</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog__posts">
+                <div class="blog__posts--month">
+                    <h3>Julij</h3>
+                </div>
+                <div class="blog__posts--dates">
+                    <div class="flex">
+                        <p>30.</p>
+                        <a href="#">Test #1</a>
+                    </div>
+                    <div class="flex">
+                        <p>29.</p>
+                        <a href="#">Test #2</a>
+                    </div>
+                    <div class="flex">
+                        <p>28.</p>
+                        <a href="#">Test #3</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
