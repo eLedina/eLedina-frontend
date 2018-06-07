@@ -20,6 +20,12 @@
         font-size: 1.4em;
     }
 
+    img {
+        width: 400px;
+        float: right;
+        padding: 10px;
+    }
+
     &__posts {
         border-top: 1px solid $color-jungle-green;
         padding: 0 20%;
@@ -37,6 +43,11 @@
                 margin-left: 30px;
             }
         }
+    }
+
+    &__data {
+        font-size: 0.7em;
+        color: darken($color-beige, 20);
     }
 
 }
