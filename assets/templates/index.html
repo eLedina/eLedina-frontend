@@ -3,24 +3,19 @@
 {% block title %}Predpražnik{% endblock %}
 {% block content %}
 
-<div class="flex flex--around landing__bg flex--middle"></div>
-<div class="landing__gradient"></div>
+<div class="landing"></div>
 
-<div class="flex flex--around landing flex--middle">
-    <div class="text--white flex flex--column">
-        <div class="flex flex--column flex--middle">
-            <h1 class="landing__font--big">eLedina.si</h1>
-            <h2 class="landing__font--medium">Spletna stran dijakov gimnazije Ledina</h2>
-        </div>
-        <div class="landing__links flex flex--middle flex--column">
-            <h2 class="landing__font--medium text--white">Dobrodošel/la!</h2>
-            <div class="flex flex--column">
-                <a class="btn__main green" href="login"> {{ svgs.login() }} PRIJAVA</a>
-                <a class="btn__main green" href="register"> {{ svgs.register() }} REGISTRACIJA</a>
-            </div>
-        </div>
+<div class="flex flex--column flex--middle flex--center landing--texts">
+    <img src="{{ url_for('static', filename='images/eledina_icon_bright.png') }}" alt="" class="landing--img">
+    <div class="text--white flex flex--column flex--middle mb60">
+        <h1>Živjo!</h1>
+        <p>Prvič tukaj? Klikni na gumb REGISTRACIJA.</p>
+        <p>Če si nam dušo že prodal, stisni gumb PRIJAVA.</p>
     </div>
-    <div></div>
+    <div class="flex flex--middle flex--row">
+        <a href="login" class="btn__main blue">PRIJAVA</a>
+        <a href="register" class="btn__main blue">REGISTRACIJA</a>
+    </div>
 </div>
 
 {% endblock %}
