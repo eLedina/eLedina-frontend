@@ -10,8 +10,71 @@
         font-size: 4em;
     }
 
+    // login.html
     &__login {
         width: 400px;
+    }
+
+    // oral_exam.html
+    &__exam {
+        width: 70%;
+        margin: 0 auto;
+
+        h2 {
+            font-size: 2.5em;
+        }
+
+        div {
+            width: 100%;
+        }
+
+        p {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        table {
+            width: 500px;
+        }
+
+        &--window {
+            background-color: transparentize($color-blue, 0.5);
+            margin: 30px 0;
+            padding: 10px;
+            border: 3px solid transparentize($color-blue, 0.7);
+        }
+
+        a {
+            cursor: pointer;
+            @include transition();
+            color: $color-black;
+
+            &::before {
+                display: none;
+            }
+
+            &:hover {
+                background-color: $color-blue;
+                color: $color-white;
+            }
+        }
+
+        &--list {
+
+            h2 {
+                font-size: 2em;
+            }
+
+            div {
+                width: 80%;
+                margin: 20px auto;
+                font-size: 1.5em;
+            }
+
+            button {
+                display: inherit;
+            }
+        }
     }
 }
 

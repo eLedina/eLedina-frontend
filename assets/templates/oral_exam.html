@@ -1,0 +1,54 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+
+<header>
+    {% include "skeletons/header.html" %}
+</header>
+
+<div class="flex flex--column">
+
+    <h1 class="text-center">Seznami za spraševanja</h1>
+
+    <div class="body__exam">
+        <div class="body__exam--window flex flex--column flex--middle">
+            <h2>Seznami v teku</h2>
+
+            <div class="flex flex--column">
+                <a href="oral_exam_list" class="flex flex--around">
+                    <p>Slovenščina</p>
+                    <p><i>Objavljeno: 17. 10. 2018</i></p>
+                </a>
+                <a href="#" class="flex flex--around">
+                    <p>Matematika</p>
+                    <p><i>Objavljeno: 17. 10. 2018</i></p>
+                </a>
+            </div>
+        </div>
+
+        <div class="flex flex--column flex--middle">
+            <h2>Tvoji seznami</h2>
+
+            <div class="flex flex--around">
+                <table class="table">
+                    <tr>
+                        <th>Predmet</th>
+                        <th>Datum</th>
+                    </tr>
+                    <tr>
+                        <td>Nemščina</td>
+                        <td>12. 11. 2018</td>
+                    </tr>
+                    <tr>
+                        <td>Biologija</td>
+                        <td>13. 11. 2018</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

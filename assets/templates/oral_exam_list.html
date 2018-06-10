@@ -1,0 +1,42 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+
+<header>
+    {% include "skeletons/header.html" %}
+</header>
+
+<div class="flex flex--column body__exam--list">
+
+    <h1 class="text-center">Seznami za spraševanja</h1>
+
+    <h2 class="text-center">Slovenščina</h2>
+
+    <div class="">
+        <table class="table">
+            <tr>
+                <th>Datum</th>
+                <th>Učenec/ka</th>
+            </tr>
+            <tr>
+                <td>12. 11. 2018</td>
+                <td>Gozdni Joža</td>
+            </tr>
+            <tr>
+                <td>13. 11. 2018</td>
+                <td>
+                    <button class="btn__main green" type="button" name="button">Zasedi mesto</button>
+                </td>
+            </tr>
+            <tr>
+                <td>14. 11. 2018</td>
+                <td>Pepe</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+{% endblock %}
