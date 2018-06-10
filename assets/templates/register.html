@@ -1,0 +1,205 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Registracija{% endblock %}
+{% block content %}
+
+<div class="body flex flex--column flex--center">
+    <div class="flex flex--middle flex--column mb30">
+        <h1>Registracija</h1>
+        <p>Nov/a tukaj? Kar naprej!</p>
+    </div>
+    <div class="flex flex--center">
+        <div class="body__login">
+            <div class="mb30 mt10 flex flex--column flex--middle">
+                <div class="input mb15" id="inp">
+                    <input id="inputUsername" type="text" name="username" required>
+                    <label>Uporabniško ime</label>
+                    <span class="err">Neveljavno uporabniško ime!</span>
+                </div>
+                <div class="input mb15" id="inp">
+                    <input id="inputName" type="text" name="username" required>
+                    <label>Ime</label>
+                    <span class="err">Neveljavno ime!</span>
+                </div>
+                <div class="input mb15" id="inp">
+                    <input id="inputSurname" type="text" name="username" required>
+                    <label>Priimek</label>
+                    <span class="err">Neveljaven priimek!</span>
+                </div>
+                <div class="input mb15" id="inp">
+                    <input id="inputEmail" type="text" name="username" required>
+                    <label>E-pošta</label>
+                    <span class="err">Neveljaven e-poštni naslov!</span>
+                </div>
+                <div class="input mb15" id="inp">
+                    <input id="inputPassword" type="password" name="password" required>
+                    <label>Geslo</label>
+                    <span class="err">Neveljavno geslo!</span>
+                </div>
+                <div class="input mb15" id="inp">
+                    <input id="inputPasswordC" type="password" name="password" required>
+                    <label>Ponovi geslo</label>
+                    <span class="err">Gesli se ne ujemata!</span>
+                </div>
+                <span id="sumbitBtn" class="btn__main blue">REGISTRIRAJ ME</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const MIN_USERNAME_LEN = 6
+        , MAX_USERNAME_LEN = 20
+        , MAX_NAME_LEN = MAX_SURNAME_LEN = 30
+        , MIN_NAME_LEN = MIN_SURNAME_LEN = 2
+        , MAX_PASSWORD_LEN = 254
+        , MIN_PASSWORD_LEN = 8;
+
+    // Check if 'email' is a valid e-mail
+    const email_test = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    function validateEmail(email) {
+        return email_test.test(email);
+    }
+
+    const submitBtn = $("#sumbitBtn")
+        , inpUsername = $("#inputUsername")
+        , inpName = $("#inputName")
+        , inpSurname = $("#inputSurname")
+        , inpEmail = $("#inputEmail")
+        , inpPassword = $("#inputPassword")
+        , inpPasswordC = $("#inputPasswordC");
+
+    const spanUsername = $("#inputUsername ~ span.err")
+        , spanName = $("#inputName ~ span.err")
+        , spanSurname = $("#inputSurname ~ span.err")
+        , spanEmail = $("#inputEmail ~ span.err")
+        , spanPassword = $("#inputPassword ~ span.err")
+        , spanPasswordC = $("#inputPasswordC ~ span.err");
+
+
+    function checkValidity() {
+        // Checks validity of form
+
+        // EMAIL
+        var mail = inpEmail.val();
+        // Not empty email field, but invalid
+        if (mail && !validateEmail(mail)) {
+            inpEmail.addClass("invalid");
+        }
+        else {
+            inpEmail.removeClass("invalid");
+        }
+
+        // USERNAME
+        var usernameLen = inpUsername.val().length;
+        // If it's empty, do not show the error
+        if (usernameLen !== 0 && usernameLen < MIN_USERNAME_LEN) {
+            spanUsername.text("Uporabniško ime je prekratko! (vsaj 6 znakov)");
+            inpUsername.addClass("invalid");
+        }
+        else if (usernameLen > MAX_USERNAME_LEN) {
+            spanUsername.text("Uporabniško ime je predolgo! (največ 20 znakov)");
+            inpUsername.addClass("invalid");
+        }
+        else {
+            inpUsername.removeClass("invalid");
+        }
+
+        // NAME
+        var nameLen = inpName.val().length;
+        if (nameLen !== 0 && nameLen < MIN_NAME_LEN) {
+            spanName.text("Uporabniško ime je prekratko! (vsaj 2 znaka)");
+            inpName.addClass("invalid");
+        }
+        else if (nameLen > MAX_NAME_LEN) {
+            spanName.text("Uporabniško ime je predolgo! (največ 30 znakov)");
+            inpName.addClass("invalid");
+        }
+        else {
+            inpName.removeClass("invalid");
+        }
+
+        // SURNAME
+        var surnameLen = inpSurname.val().length;
+        if (surnameLen !== 0 && surnameLen < MIN_SURNAME_LEN) {
+            spanSurname.text("Uporabniško ime je prekratko! (vsaj 2 znaka)");
+            inpSurname.addClass("invalid");
+        }
+        else if (surnameLen > MAX_SURNAME_LEN) {
+            spanSurname.text("Uporabniško ime je predolgo! (največ 30 znakov)");
+            inpSurname.addClass("invalid");
+        }
+        else {
+            inpSurname.removeClass("invalid");
+        }
+
+        // PASSWORD
+        var passw = inpPassword.val();
+        var passwConfirm = inpPasswordC.val();
+        if (passw.length !== 0 && passw.length < MIN_PASSWORD_LEN) {
+            spanPassword.text("Prekratko geslo! (vsaj 8 znakov)");
+            inpPassword.addClass("invalid");
+        }
+        else if (passw.length > MAX_PASSWORD_LEN) {
+            spanPassword.text("Predolgo geslo ;) (največ 254 znakov)");
+            inpPassword.addClass("invalid");
+        }
+        else if (passw !== passwConfirm && passwConfirm.length !== 0) {
+            spanPassword.text("Gesli se ne ujemata!");
+            inpPassword.addClass("invalid");
+        }
+        else {
+            inpPassword.removeClass("invalid");
+        }
+    }
+
+    function anyInvalid() {
+        // if any fields are invalid do not continue
+        return !(inpUsername.hasClass("invalid") || inpName.hasClass("invalid")
+            || inpSurname.hasClass("invalid") || inpEmail.hasClass("invalid")
+            || inpPassword.hasClass("invalid") || inpPasswordC.hasClass("invalid"));
+
+    }
+
+    fnValidate = function () {checkValidity()};
+
+    inpUsername.focusout(fnValidate);
+    inpName.focusout(fnValidate);
+    inpSurname.focusout(fnValidate);
+    inpEmail.focusout(fnValidate);
+    inpPassword.focusout(fnValidate);
+    inpPasswordC.focusout(fnValidate);
+
+    // submit form
+    submitBtn.click(function (e) {
+        // Verify form validity
+        if (!anyInvalid()) {
+            e.preventDefault();
+        }
+        else {
+            var payload = {
+                "username": inpUsername.val(),
+                "name": inpName.val(),
+                "surname": inpSurname.val(),
+                "email": inpEmail.val(),
+                "password": inpPassword.val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url:"{{ url_for("api.register") }}",
+                //dataType: "json",
+                contentType: "application/json",
+                async: "false",
+                data: JSON.stringify(payload),
+                
+                success: function () {
+                    console.log("Register sent!")
+                }
+            })
+        }
+    })
+</script>
+{% endblock %}

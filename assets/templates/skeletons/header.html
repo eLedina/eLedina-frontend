@@ -6,7 +6,7 @@
     </div>
     <div class="flex flex--middle flex--center header__links">
 
-        <a href="home">
+        <a href="{{ url_for('home') }}">
             {{ svgs.home() }}
             <span>Domov</span>
         </a>
@@ -22,7 +22,7 @@
             {{ svgs.seznami() }}
             <span>Seznami</span>
         </a>
-        <a href="blog_main">
+        <a href="blog_mainpage">
             {{ svgs.blog() }}
             <span>Blog</span>
         </a>

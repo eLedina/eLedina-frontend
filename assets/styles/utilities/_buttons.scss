@@ -13,6 +13,7 @@
         letter-spacing: 1px;
         font-weight: bold;
         margin: 5px;
+        cursor: pointer;
         @include transition();
 
         svg {
