@@ -12,7 +12,6 @@ body {
     margin: 0;
     overflow-x: hidden;
     line-height: 1.6;
-    height: 100vh;
     color: $color-jungle-green;
     //font-size: 14px;
     font-family: $font-primary;
@@ -22,9 +21,6 @@ section {
 }
 iframe {
     border: 0;
-}
-main {
-    display: block;
 }
 ol,
 ul {
@@ -159,17 +155,13 @@ p {
 }
 
 main {
-    overflow-x: hidden;
-    overflow-y: auto;
-    font-family: $font-primary, Arial, sans-serif;
     background-color: $color-white;
-    z-index: 100;
-    position: relative;
-    height: 100vh;
-    width: calc(100% - 50px);
+    width: 100%;
+    min-height: 100vh;
+    overflow: auto;
 
     @include transition();
-    @include transform(translateX(50px));
+    @include transform(translateX(70px));
 
     &.display {
         @include transform(translateX(200px))

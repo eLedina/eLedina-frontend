@@ -3,10 +3,6 @@
 {% block title %}Blog{% endblock %}
 {% block content %}
 
-<header>
-    {% include "skeletons/header.html" %}
-</header>
-
 <div class="flex flex--column">
 
     <h1 class="text-center">Seznami za spraševanja</h1>
@@ -16,7 +12,7 @@
             <h2>Seznami v teku</h2>
 
             <div class="flex flex--column">
-                <a href="{{ url_for('oralExamList') }}" class="flex flex--around">
+                <a href="oral_exam_list.html" class="flex flex--around">
                     <p>Slovenščina</p>
                     <p><i>Objavljeno: 17. 10. 2018</i></p>
                 </a>

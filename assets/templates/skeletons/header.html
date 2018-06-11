@@ -1,39 +1,32 @@
 {% import "macros/svgs.html" as svgs %}
 
-<nav class="flex flex--around flex--middle header">
-    <div class="">
-        <img src="{{ url_for('static', filename='images/eledina_icon_header.png') }}" alt="">
-    </div>
-    <div class="flex flex--middle flex--center header__links">
-
-        <a href="{{ url_for('home') }}">
-            {{ svgs.home() }}
-            <span>Domov</span>
-        </a>
-        <a href="#">
+<nav class="header flex flex--column">
+    <a href="/home.html">
+        {{ svgs.home() }}
+        <span>Domov</span>
+    </a>
+    <a href="#">
             {{ svgs.ucenje() }}
             <span>Učenje</span>
-        </a>
-        <a href="#">
-            {{ svgs.dogodki() }}
-            <span>Dogodki</span>
-        </a>
-        <a href="{{ url_for('oralExam') }}">
-            {{ svgs.seznami() }}
-            <span>Seznami</span>
-        </a>
-        <a href="{{ url_for('blogMain') }}">
-            {{ svgs.blog() }}
-            <span>Blog</span>
-        </a>
-        <a href="#">
-            {{ svgs.contact() }}
-            <span>Kontakti</span>
-        </a>
-        <a href="#">
-            {{ svgs.settings() }}
-            <span>Nastavitve</span>
-        </a>
-
-    </div>
+    </a>
+    <a href="#">
+        {{ svgs.dogodki() }}
+        <span>Dogodki</span>
+    </a>
+    <a href="/oral_exam.html">
+        {{ svgs.seznami() }}
+        <span>Seznami</span>
+    </a>
+    <a href="/blog_mainpage.html">
+        {{ svgs.blog() }}
+        <span>Blog</span>
+    </a>
+    <a href="#">
+        {{ svgs.contact() }}
+        <span>Kontakti</span>
+    </a>
+    <a href="#">
+        {{ svgs.settings() }}
+        <span>Nastavitve</span>
+    </a>
 </nav>

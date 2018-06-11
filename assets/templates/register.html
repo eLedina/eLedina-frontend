@@ -1,4 +1,4 @@
-{% extends "skeletons/base.html" %}
+{% extends "skeletons/base02.html" %}
 {% import "macros/svgs.html" as svgs %}
 {% block title %}Registracija{% endblock %}
 {% block content %}
@@ -194,7 +194,7 @@
                 contentType: "application/json",
                 async: "false",
                 data: JSON.stringify(payload),
-                
+
                 success: function () {
                     console.log("Register sent!")
                 }
