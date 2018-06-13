@@ -15,26 +15,20 @@
 </head>
 
 <body class="body">
-
-<div>
-    {% block content %}{% endblock %}
-</div>
-
-
-
-<div class="info flex flex--around flex--middle">
-    <p><b>Pozor!</b> Na tem spletnem mestu v prid normalne uporabniške izkušnje uporabljamo piškotke! Več o tem si preberite <a href="cookie_jar">tukaj</a>.</p>
-    <button type="button" name="button" class="btn__main green">Strinjam se s piškotki</button>
-</div>
-<footer class="footer flex flex--center flex--middle text--white flex--column">
-    <div class="">
-        <div class="flex flex--center">
-            <p>Copyright &copy; 2018 eLedina</p>
-            <span>|</span>
-            <a href="#">Politika zasebnosti in pogoji uporabe</a>
-        </div>
+    <div class="minh100">
+        {% block content %}{% endblock %}
     </div>
-</footer>
+
+    {% include "skeletons/cookieConsent.html" %}
+    <footer class="footer flex flex--center flex--middle text--white flex--column">
+        <div class="">
+            <div class="flex flex--center">
+                <p>Copyright &copy; 2018 eLedina</p>
+                <span>|</span>
+                <a href="#">Politika zasebnosti in pogoji uporabe</a>
+            </div>
+        </div>
+    </footer>
 </body>
 
 <!-- scripts -->

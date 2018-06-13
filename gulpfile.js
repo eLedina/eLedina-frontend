@@ -4,6 +4,7 @@ const browserSync = require('browser-sync'),
       flatten = require('gulp-flatten'),
       cssNano = require('gulp-cssnano'),
       imageMin = require('gulp-imagemin'),
+      concat = require('gulp-concat'),
       sass = require('gulp-sass'),
       sourcemaps = require('gulp-sourcemaps'),
       watch = require('gulp-watch'),
@@ -52,6 +53,8 @@ gulp.task('scripts', function() {
     return gulp
         .src(config.src + 'scripts/**/*.js')
         .pipe(sourcemaps.init())
+        // should concat all scripts
+        .pipe(concat("main.js"))
         .pipe(sourcemaps.write('sourcemaps'))
         .pipe(gulp.dest(config.static + 'scripts'))
         .pipe(browserSync.stream());

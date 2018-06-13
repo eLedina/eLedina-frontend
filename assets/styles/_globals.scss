@@ -154,10 +154,13 @@ p {
     box-sizing: border-box;
 }
 
+.minh100 {
+    min-height: 100vh;
+}
+
 main {
     background-color: $color-white;
     width: 100%;
-    min-height: 100vh;
     overflow: auto;
 
     @include transition();
