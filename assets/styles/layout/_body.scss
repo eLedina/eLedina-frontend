@@ -13,6 +13,11 @@
     // login.html
     &__login {
         width: 400px;
+
+        // login.html + register.html
+        &--height {
+            height: 100vh;
+        }
     }
 
     // oral_exam.html

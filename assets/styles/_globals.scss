@@ -167,7 +167,7 @@ main {
     @include transform(translateX(70px));
 
     &.display {
-        @include transform(translateX(200px))
+        @include transform(translateX(250px))
     }
 
     &.noside {
