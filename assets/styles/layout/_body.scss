@@ -24,20 +24,17 @@
     &__exam {
         width: 70%;
         margin: 0 auto;
-
+        
         h2 {
             font-size: 2.5em;
         }
-
         div {
             width: 100%;
         }
-
         p {
             font-size: 1.5em;
             font-weight: bold;
         }
-
         table {
             width: 500px;
         }
@@ -53,11 +50,9 @@
             cursor: pointer;
             @include transition();
             color: $color-black;
-
             &::before {
                 display: none;
             }
-
             &:hover {
                 background-color: $color-blue;
                 color: $color-white;
@@ -65,25 +60,60 @@
         }
 
         &--list {
-
             h2 {
                 font-size: 2em;
             }
-
             div {
                 width: 80%;
                 margin: 20px auto;
                 font-size: 1.5em;
             }
-
             button {
                 display: inherit;
             }
         }
     }
 
+    // news.html
     &__news {
         width: 80%;
+    }
+
+    // learning.html
+    &__learning {
+        &--search {
+            max-width: 90%;
+            div {
+                width: auto;
+            }
+            p {
+                font-size: 1.2em;
+                padding: 0 10px;
+            }
+            input {
+                width: auto;
+            }
+        }
+
+        &--list {
+            width: 80%;
+            tr {
+                cursor: pointer;
+                &:hover {
+                    background-color: $color-beige;
+                }
+            }
+            #header {
+                cursor: auto;
+                &:hover {
+                    background-color: $color-white;
+                }
+            }
+        }
+
+        &--red {
+            color: $color-red !important;
+        }
     }
 }
 

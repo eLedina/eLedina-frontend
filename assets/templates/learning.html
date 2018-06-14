@@ -1,0 +1,83 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Učenje{% endblock %}
+{% block content %}
+
+<div class="flex flex--column flex--middle">
+
+    <h1>Učenje</h1>
+
+    <div class="flex flex--around body__learning--search mb60">
+        <div class="flex flex--middle input">
+            <p>Iskanje:</p>
+            <input type="text" name="" value="">
+        </div>
+        <div class="flex flex--middle">
+            <p>Predmet:</p>
+            <select class="select" name="">
+                <option value="">IZBERI PREDMET</option>
+                <option value="">Angleščina</option>
+                <option value="">Biologija</option>
+                <option value="">Filozofija</option>
+                <option value="">Fizika</option>
+                <option value="">Francoščina</option>
+                <option value="">Geografija</option>
+                <option value="">Glasba</option>
+                <option value="">Informatika</option>
+                <option value="">Italijanščina</option>
+                <option value="">Kemija</option>
+                <option value="">Likovna umetnost</option>
+                <option value="">Matematika</option>
+                <option value="">Nemščina</option>
+                <option value="">Psihologija</option>
+                <option value="">Slovenščina</option>
+                <option value="">Španščina</option>
+                <option value="">Športna vzgoja</option>
+                <option value="">Umetnostna zgodovina</option>
+                <option value="">Zgodovina</option>
+            </select>
+        </div>
+        <div class="flex flex--middle">
+            <p>Status:</p>
+            <select class="select" name="">
+                <option value="">Vsi</option>
+                <option value="">Odgovorjeno</option>
+                <option value="">Neodgovorjeno</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="body__learning--list">
+        <table class="table">
+            <tr data-url="#" id="header">
+                <th>Naslov</th>
+                <th>Predmet</th>
+                <th>Avtor</th>
+                <th>Datum</th>
+                <th>Status</th>
+            </tr>
+            <tr data-url="#">
+                <td>Kaj je informatika?</td>
+                <td>Informatika</td>
+                <td>Gorazd</td>
+                <td>1. 7. 2018</td>
+                <td class="body__learning--red">NEODGOVORJENO</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    $("tr").click(function () {
+        window.location = $(this).data("url")
+    });
+
+</script>
+
+{% endblock %}
