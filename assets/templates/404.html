@@ -1,0 +1,17 @@
+{% extends "skeletons/base02.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Error 404{% endblock %}
+{% block content %}
+
+<div class="flex flex--column flex--middle">
+  <h1>Napaka 404</h1>
+  <p>Error 404 - Not Found</p>
+
+  <div class="flex flex--column flex--middle">
+    <p>To, kar iščeš, očitno ne obstaja ... Shit, a ne?</p>
+    <img src="{{ url_for('static', filename='images/404.gif') }}" width=500px>
+    <button type="button" name="button" class="btn__main green">VRNI SE DOMOV</button>
+  </div>
+</div>
+
+{% endblock %}
