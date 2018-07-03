@@ -21,11 +21,13 @@
 
     th {
         padding: 5px 10px;
+        font-weight: bold;
     }
 
     tr {
         border-bottom: 1px solid darken($color-beige, 20);
         width: 100%;
+        @include transition();
     }
 
     table.responsive{

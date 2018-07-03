@@ -1,0 +1,37 @@
+{% extends "skeletons/base.html" %}
+{% import "macros/svgs.html" as svgs %}
+{% block title %}Dom{% endblock %}
+{% block content %}
+
+<div class="flex flex--column flex--middle">
+    <h1>Nastavitve</h1>
+
+    <div class="body__settings mt60">
+        <div class="input flex flex--middle mb30">
+            <p>Spremeni email:</p>
+            <input type="text" name="" value="">
+        </div>
+        <div class="input flex flex--middle mb30">
+            <p>Spremeni geslo:</p>
+            <input type="text" name="" value="">
+        </div>
+        <div class="flex flex--middle mb30 input">
+            <p>Zahtevaj spremembo razreda*:</p>
+            <input type="text" name="" value="">
+            <button type="button" name="button" class="btn__main green">POŠLJI ZAHTEVO</button>
+        </div>
+        <div class="">
+            <p>Tvoj opis samega sebe:</p>
+            <textarea class="textarea" name="name" rows="8" cols="80">
+            </textarea>
+        </div>
+        <button type="button" name="button" class="btn__main green">SHRANI NASTAVITVE</button>
+    </div>
+
+    <div class="body__settings--footnote mt30">
+        <p>* Razreda si ne moreš spremeniti sam/a (da ne bi prišlo do čudnih zlorab), vendar pa lahko zahtevo po spremembi razreda pošlješ adminom, ki bomo zahtevo preučili in jo (če je seveda sprejemljiva) odobrili. V okence vpiši samo, v kateri razred hočeš (npr. 3A, 4G, 1B ...).</p>
+    </div>
+
+</div>
+
+{% endblock %}
