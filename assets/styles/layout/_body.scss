@@ -18,6 +18,15 @@
         &--height {
             height: 100vh;
         }
+        
+        #errorBox {
+            color: $color-red;
+            
+            visibility: hidden;
+            &.visible {
+                visibility: visible;
+            }
+        }
     }
 
     // oral_exam.html

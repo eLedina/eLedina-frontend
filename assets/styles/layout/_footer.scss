@@ -40,14 +40,14 @@
 }
 
 .cookieConsent {
-    visibility: visible;
+    visibility: hidden;
     position: fixed;
     width: 100%;
     bottom: 0;
     z-index: 2;
     
-    &.consented {
-        visibility: hidden;
+    &.visible {
+        visibility: visible;
     }
     
     .inner {

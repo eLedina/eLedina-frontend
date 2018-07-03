@@ -4,14 +4,12 @@
 // USER CONSENT
 // check if user agreed to cookies
 function userHasConsented() {
-    var consent = Cookies.get("cookieConsent");
-
-    return typeof consent !== "undefined";
+    return typeof Cookies.get("cookieConsent") !== "undefined";
 }
 
 function setUserConsent() {
     // Sets the user consent, expiring in a year
-    Cookies.set("cookieConsent", true, { expires: 365 })
+    Cookies.set("cookieConsent", 1, { expires: 365 })
 }
 
 
@@ -19,9 +17,13 @@ function setUserConsent() {
 const cookieConsentBtn = $("#consentBtn")
     , cookieConsentBlock = $(".cookieConsent");
 
+if (!userHasConsented()) {
+    cookieConsentBlock.addClass("visible")
+}
+
 // When user consents, save that into a cookie with expiry of one year
 cookieConsentBtn.click(function () {
-    cookieConsentBlock.addClass("consented");
+    cookieConsentBlock.removeClass("visible");
     setUserConsent();
 });
 

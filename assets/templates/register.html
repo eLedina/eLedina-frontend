@@ -10,7 +10,7 @@
     </div>
     <div class="flex flex--center">
         <div class="body__login">
-            <div class="mb30 mt10 flex flex--column flex--middle">
+            <form id="accessibilityForm" class="mb30 mt10 flex flex--column flex--middle">
                 <div class="input mb15" id="inp">
                     <input id="inputUsername" type="text" name="username" required>
                     <label>Uporabniško ime</label>
@@ -42,7 +42,8 @@
                     <span class="err">Gesli se ne ujemata!</span>
                 </div>
                 <span id="sumbitBtn" class="btn__main blue">REGISTRIRAJ ME</span>
-            </div>
+                <span id="errorBox">Prišlo je do napake pri registraciji.</span>
+            </form>
         </div>
     </div>
 </div>
@@ -77,6 +78,13 @@
         , spanEmail = $("#inputEmail ~ span.err")
         , spanPassword = $("#inputPassword ~ span.err")
         , spanPasswordC = $("#inputPasswordC ~ span.err");
+
+    const errorBox = $("#errorBox");
+
+    // Prevent the form from submitting (only used for accessibility purposes)
+    $("#accessibilityForm").submit(function (e) {
+        e.preventDefault();
+    });
 
 
     function checkValidity() {
@@ -195,8 +203,16 @@
                 async: "false",
                 data: JSON.stringify(payload),
 
-                success: function () {
-                    console.log("Register sent!")
+                success: function (resp) {
+                    console.log("Register sent!");
+
+                    if (resp.status !== 200) {
+                        errorBox.addClass("visible");
+                        throw "There was an error while registering: status code " + status;
+                    } else { errorBox.removeClass("visible") }
+
+                    console.log(resp);
+                    //var data = JSON.parse(resp.)
                 }
             })
         }
