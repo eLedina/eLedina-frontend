@@ -19,13 +19,20 @@
             height: 100vh;
         }
         
-        #errorBox {
-            color: $color-red;
-            
+        #errorBox, #successBox {
             visibility: hidden;
+            height: 0;
             &.visible {
                 visibility: visible;
+                height: auto;
             }
+        }
+        
+        #errorBox {
+             color: $color-red;
+        }
+        #successBox {
+            color: $color-fern-green
         }
     }
 

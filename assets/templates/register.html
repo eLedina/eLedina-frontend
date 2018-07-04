@@ -43,6 +43,7 @@
                 </div>
                 <span id="sumbitBtn" class="btn__main blue">REGISTRIRAJ ME</span>
                 <span id="errorBox">Prišlo je do napake pri registraciji.</span>
+                <span id="successBox">Registracija je uspela! Sedaj vas bo preusmerilo...</span>
             </form>
         </div>
     </div>
@@ -79,7 +80,8 @@
         , spanPassword = $("#inputPassword ~ span.err")
         , spanPasswordC = $("#inputPasswordC ~ span.err");
 
-    const errorBox = $("#errorBox");
+    const errorBox = $("#errorBox")
+        , successBox = $("#successBox");
 
     // Prevent the form from submitting (only used for accessibility purposes)
     $("#accessibilityForm").submit(function (e) {
@@ -202,17 +204,40 @@
                 contentType: "application/json",
                 async: "false",
                 data: JSON.stringify(payload),
+                // disable json parsing
+                dataType: "text",
 
-                success: function (resp) {
-                    console.log("Register sent!");
+                complete: function (resp) {
+                    console.log("Register sent! (status code " + resp.status + ")");
+
+                    var data = JSON.parse(resp.responseText);
+                    console.debug(data);
 
                     if (resp.status !== 200) {
-                        errorBox.addClass("visible");
-                        throw "There was an error while registering: status code " + status;
-                    } else { errorBox.removeClass("visible") }
+                        // There was an error, check status
 
-                    console.log(resp);
-                    //var data = JSON.parse(resp.)
+                        // 403 Forbidden
+                        if (resp.status === 403) {
+                            // username already exists
+                            if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
+                                errorBox.text("Uporabniško ime je že zasedeno.")
+                            }
+                            // email already registered
+                            else if (data.status === StatusTypes.EMAIL_ALREADY_REGISTERED) {
+                                errorBox.text("Ta e-poštni naslov je že registriran.")
+                            }
+                        }
+
+                        // show error
+                        successBox.removeClass("visible");
+                        errorBox.addClass("visible");
+
+                        throw "There was an error while registering: status code " + resp.status;
+                    } else {
+                        errorBox.removeClass("visible");
+                        successBox.addClass("visible");
+                    }
+
                 }
             })
         }
