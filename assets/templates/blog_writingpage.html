@@ -21,7 +21,7 @@
             </div>
 
             <button type="button" name="button" class="btn__main green">Dodaj fotografijo</button>
-            <button type="submit" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
+            <button type="button" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
         </form>
 
     </div>
@@ -35,28 +35,27 @@
     var bcontent = $("#inputContent");
 
     submitBtn.click(function () {
-        var date = new Date();
+        var raw_date = new Date();
+        var date = Math.floor(raw_date.getTime() / 1000);
         var payload = {
             "title": btitle.val(),
-            "content": btitle.val(),
+            "content": bcontent.val(),
             "date": date
         };
 
-        $.ajax({
-            type: "POST",
-            url:"{{ url_for("api.blog_writingpage")}}",
-            contentType: "application/json",
-            // By default requests are sent asynchronously - this disables it
-            async: "false",
-            data: JSON.stringify(payload),
-            dataType: "text",
-            success: function (response) {
-                console.log("Blog posted!" + response);
-            },
-            error: function(error) {
-                console.log(error);
+        var url = "{{ url_for('api.blog_new') }}"
+
+        ledinaAjax(
+            "POST", url, payload,
+
+            function(response) {
+                console.log("Fuckin did it!");
+
+                console.log(response.status);
+
+                console.log(response.responseText);
             }
-        });
+        );
     });
 </script>
 {% endblock %}
