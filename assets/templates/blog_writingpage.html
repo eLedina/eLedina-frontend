@@ -10,21 +10,53 @@
 
         <h2>Nov blog</h2>
 
-        <form class="">
+        <form id="blogForm">
             <div class="input">
-                <input type="text" name="title" value="" required>
+                <input type="text" name="title" id="inputTitle" required>
                 <label>Naslov</label>
             </div>
 
             <div class="">
-                <textarea name="Text1" class="textarea"></textarea>
+                <textarea name="Text1" class="textarea" id="inputContent"></textarea>
             </div>
 
             <button type="button" name="button" class="btn__main green">Dodaj fotografijo</button>
-            <button type="submit" name="button" class="btn__main blue">OBJAVI</button>
+            <button type="submit" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
         </form>
 
     </div>
 </div>
+{% endblock %}
 
+{% block scripts %}
+<script>
+    var submitBtn = $("#submitBtn");
+    var btitle = $("#inputTitle");
+    var bcontent = $("#inputContent");
+
+    submitBtn.click(function () {
+        var date = new Date();
+        var payload = {
+            "title": btitle.val(),
+            "content": btitle.val(),
+            "date": date
+        };
+
+        $.ajax({
+            type: "POST",
+            url:"{{ url_for("api.blog_writingpage")}}",
+            contentType: "application/json",
+            // By default requests are sent asynchronously - this disables it
+            async: "false",
+            data: JSON.stringify(payload),
+            dataType: "text",
+            success: function (response) {
+                console.log("Blog posted!" + response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
 {% endblock %}
