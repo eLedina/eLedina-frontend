@@ -25,7 +25,7 @@ function ledinaAjax(type, url, data, callback, kwargs) {
         url: url,
         contentType: "application/json",
         async: "false",
-        data: data,
+        data: JSON.stringify(data),
         // disable json parsing
         dataType: "text",
 
