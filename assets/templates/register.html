@@ -189,13 +189,13 @@
             e.preventDefault();
         }
         else {
-            var payload = JSON.stringify({
+            var payload = {
                 "username": inpUsername.val(),
                 "name": inpName.val(),
                 "surname": inpSurname.val(),
                 "email": inpEmail.val(),
                 "password": inpPassword.val()
-            });
+            };
             var url = "{{ url_for('api.register') }}"
               , type = "POST";
 
