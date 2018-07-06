@@ -32,12 +32,15 @@
     var btitle = $("#inputTitle");
     var bcontent = $("#inputContent");
 
+    var text = bcontent.val();
+    
+
     submitBtn.click(function () {
         var raw_date = new Date();
         var date = Math.floor(raw_date.getTime() / 1000);
         var payload = {
             "title": btitle.val(),
-            "content": bcontent.val(),
+            "content": text,
             "date": date
         };
 

@@ -6,53 +6,8 @@
 <div class="body">
     <h1 class="text-center">Blog</h1>
 
-    <div class="blog">
-        <div id="2018">
-            <h2>2018</h2>
-            <div class="">
+    <div class="blog" id="blog">
 
-                <div class="blog__posts" id="7.">
-                    <div class="blog__posts--month">
-                        <h3>Julij</h3>
-                    </div>
-                    <div class="blog__posts--dates" id="posts7.">
-                        <div class="flex">
-                            <p>30.</p>
-                            <a href="blogs/blog_sample.html">Test #1</a>
-                        </div>
-                        <div class="flex">
-                            <p>29.</p>
-                            <a href="#">Test #2</a>
-                        </div>
-                        <div class="flex">
-                            <p>28.</p>
-                            <a href="#">Test #3</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="blog__posts" id="6.">
-                    <div class="blog__posts--month">
-                        <h3>Junij</h3>
-                    </div>
-                    <div class="blog__posts--dates" id="posts6.">
-                        <div class="flex">
-                            <p>30.</p>
-                            <a href="#">Test #1</a>
-                        </div>
-                        <div class="flex">
-                            <p>29.</p>
-                            <a href="#">Test #2</a>
-                        </div>
-                        <div class="flex">
-                            <p>28.</p>
-                            <a href="#">Test #3</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 </div>
 
@@ -66,10 +21,12 @@
         $.getJSON("{{ url_for('api.blog_get') }}", function (pack) {
 
             for (x in pack) {
-                var array = pack[x]
+                var array = pack[x];
 
-                var epoch_date = array[2]
-                var title = array[0]
+                var epoch_date = array["date"];
+                var title = array["title"];
+                var id = x.replace("blog:", "");
+                console.log(id);
 
                 var myDate = new Date(epoch_date *1000);
                 var date_str = myDate.toLocaleString();
@@ -78,19 +35,60 @@
                 var month = date_array[1];
                 var day = date_array[0];
 
+                var month_name
+
+                if (month == "1.") {
+                    month_name = "Januar";
+                } else if (month == "2.") {
+                    month_name = "Februar";
+                } else if (month == "3.") {
+                    month_name = "Marec";
+                } else if (month == "4.") {
+                    month_name = "April";
+                } else if (month == "5.") {
+                    month_name = "Maj";
+                } else if (month == "6.") {
+                    month_name = "Junij";
+                } else if (month == "7.") {
+                    month_name = "Julij";
+                } else if (month == "8.") {
+                    month_name = "Avgust";
+                } else if (month == "9.") {
+                    month_name = "September";
+                } else if (month == "10.") {
+                    month_name = "Oktober";
+                } else if (month == "11.") {
+                    month_name = "November";
+                } else if (month == "12.") {
+                    month_name = "December";
+                }
+
 
                 var yearExists = document.getElementById(year);
                 var monthExists = document.getElementById(month);
                 if (yearExists == null) {
+                    $("#blog").append('<div id="' + year + '"><h2>' + year + '</h2><div id="months' + year + '"></div></div>')
+
+                    if (monthExists == null) {
+                        $("#months" + year).append('<div class="blog__posts" id="' + month + '"><div class="blog__posts--month"><h3>' + month_name + '</h3></div><div class="blog__posts--dates" id="posts' + month.replace('.','') + '"></div></div>');
+                        var posts = "#posts" + month.replace('.','');
+                        $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
+
+                    } else {
+                        var posts = "#posts" + month.replace('.','');
+                        $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
+                    }
 
                 } else {
 
                     if (monthExists == null) {
+                        $("#months" + year).append('<div class="blog__posts" id="' + month + '"><div class="blog__posts--month"><h3>' + month_name + '</h3></div><div class="blog__posts--dates" id="posts' + month.replace('.','') + '"></div></div>');
+                        var posts = "#posts" + month.replace('.','');
+                        $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
 
                     } else {
-                        var posts = "posts" + month;
-                        console.log(posts);
-                        $("#posts7.").append("<div class='flex'><p>" + day + "</p><a href='#''>" + title + "</a></div>")
+                        var posts = "#posts" + month.replace('.','');
+                        $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
                     }
 
                 }
