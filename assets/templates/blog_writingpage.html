@@ -32,15 +32,40 @@
     var btitle = $("#inputTitle");
     var bcontent = $("#inputContent");
 
-    var text = bcontent.val();
-    
+    var converter = new showdown.Converter();
+    // Disables newlines
+    converter.setOption("omitExtraWLInCodeBlocks", "true");
+    // Turns links into ... LINKS!!1
+    converter.setOption("simplifiedAutoLink", "true");
+    converter.setOption("excludeTrailingPunctuationFromURLs", "true");
+    // Treats underscores in the middle as underscores, not bold text.
+    converter.setOption("literalMidWordUnderscores", "true");
+    // Sarcasm/edgy necessity (line through).
+    converter.setOption("strikethrough", "true");
+    // This one's obvious.
+    converter.setOption("tables", "true");
+    converter.setOption("tablesHeaderId", "true");
+    // Like shopping list - checks stuff.
+    converter.setOption("tasklists", "true");
+    // Removes annoying GitHub-doesn't-give-a-shit-about-line-breaks thingy.
+    converter.setOption("simpleLineBreaks", "true");
+    // Adds blessing from God.
+    converter.setOption("openLinksInNewWindow", "true");
+    // Emoji movie.
+    converter.setOption("emoji", "true");
+    // Underline.
+    converter.setOption("underline", "true");
+
 
     submitBtn.click(function () {
+        var text = bcontent.val();
+        var output = converter.makeHtml(text);
+        console.log(output);
         var raw_date = new Date();
         var date = Math.floor(raw_date.getTime() / 1000);
         var payload = {
             "title": btitle.val(),
-            "content": text,
+            "content": output,
             "date": date
         };
 
