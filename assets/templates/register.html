@@ -199,50 +199,6 @@
             var url = "{{ url_for('api.register') }}"
               , type = "POST";
 
-            {#$.ajax({
-                type: "POST",
-                url:"{{ url_for("api.register") }}",
-                //dataType: "json",
-                contentType: "application/json",
-                async: "false",
-                data: JSON.stringify(payload),
-                // disable json parsing
-                dataType: "text",
-
-                complete: function (resp) {
-                    console.log("Register sent! (status code " + resp.status + ")");
-
-                    var data = JSON.parse(resp.responseText);
-                    console.debug(data);
-
-                    if (resp.status !== 200) {
-                        // There was an error, check status
-
-                        // 403 Forbidden
-                        if (resp.status === 403) {
-                            // username already exists
-                            if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
-                                errorBox.text("Uporabniško ime je že zasedeno.")
-                            }
-                            // email already registered
-                            else if (data.status === StatusTypes.EMAIL_ALREADY_REGISTERED) {
-                                errorBox.text("Ta e-poštni naslov je že registriran.")
-                            }
-                        }
-
-                        // show error
-                        successBox.removeClass("visible");
-                        errorBox.addClass("visible");
-
-                        throw "There was an error while registering: status code " + resp.status;
-                    } else {
-                        errorBox.removeClass("visible");
-                        successBox.addClass("visible");
-                    }
-
-                }
-            });#}
-
             ledinaAjax(
                 type,  url, payload,
                 function (resp) {
