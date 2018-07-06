@@ -7,52 +7,96 @@
     <h1 class="text-center">Blog</h1>
 
     <div class="blog">
-        <h2>2018</h2>
+        <div id="2018">
+            <h2>2018</h2>
+            <div class="">
 
-        <div class="">
+                <div class="blog__posts" id="7.">
+                    <div class="blog__posts--month">
+                        <h3>Julij</h3>
+                    </div>
+                    <div class="blog__posts--dates" id="posts7.">
+                        <div class="flex">
+                            <p>30.</p>
+                            <a href="blogs/blog_sample.html">Test #1</a>
+                        </div>
+                        <div class="flex">
+                            <p>29.</p>
+                            <a href="#">Test #2</a>
+                        </div>
+                        <div class="flex">
+                            <p>28.</p>
+                            <a href="#">Test #3</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="blog__posts">
-                <div class="blog__posts--month">
-                    <h3>Junij</h3>
+                <div class="blog__posts" id="6.">
+                    <div class="blog__posts--month">
+                        <h3>Junij</h3>
+                    </div>
+                    <div class="blog__posts--dates" id="posts6.">
+                        <div class="flex">
+                            <p>30.</p>
+                            <a href="#">Test #1</a>
+                        </div>
+                        <div class="flex">
+                            <p>29.</p>
+                            <a href="#">Test #2</a>
+                        </div>
+                        <div class="flex">
+                            <p>28.</p>
+                            <a href="#">Test #3</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="blog__posts--dates">
-                    <div class="flex">
-                        <p>30.</p>
-                        <a href="blogs/blog_sample.html">Test #1</a>
-                    </div>
-                    <div class="flex">
-                        <p>29.</p>
-                        <a href="#">Test #2</a>
-                    </div>
-                    <div class="flex">
-                        <p>28.</p>
-                        <a href="#">Test #3</a>
-                    </div>
-                </div>
+
             </div>
-
-            <div class="blog__posts">
-                <div class="blog__posts--month">
-                    <h3>Julij</h3>
-                </div>
-                <div class="blog__posts--dates">
-                    <div class="flex">
-                        <p>30.</p>
-                        <a href="#">Test #1</a>
-                    </div>
-                    <div class="flex">
-                        <p>29.</p>
-                        <a href="#">Test #2</a>
-                    </div>
-                    <div class="flex">
-                        <p>28.</p>
-                        <a href="#">Test #3</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function () {
+
+        $.getJSON("{{ url_for('api.blog_get') }}", function (pack) {
+
+            for (x in pack) {
+                var array = pack[x]
+
+                var epoch_date = array[2]
+                var title = array[0]
+
+                var myDate = new Date(epoch_date *1000);
+                var date_str = myDate.toLocaleString();
+                var date_array = date_str.split(" ");
+                var year = date_array[2];
+                var month = date_array[1];
+                var day = date_array[0];
+
+
+                var yearExists = document.getElementById(year);
+                var monthExists = document.getElementById(month);
+                if (yearExists == null) {
+
+                } else {
+
+                    if (monthExists == null) {
+
+                    } else {
+                        var posts = "posts" + month;
+                        console.log(posts);
+                        $("#posts7.").append("<div class='flex'><p>" + day + "</p><a href='#''>" + title + "</a></div>")
+                    }
+
+                }
+            }
+
+        });
+    });
+</script>
 {% endblock %}
