@@ -111,8 +111,9 @@
     var btitle = $("#inputTitle");
     var bcontent = $("#inputContent");
     var upload = true;
-
+    var url = "{{ url_for('api.blog_new') }}";
     var converter = new showdown.Converter();
+
     // Disables newlines
     converter.setOption("omitExtraWLInCodeBlocks", "true");
     // Turns links into ... LINKS!!1
@@ -139,26 +140,30 @@
 
     submitBtn.click(function () {
         var text = bcontent.val();
+        // Converts markdown into html using Showdown
         var output = converter.makeHtml(text);
         var raw_date = new Date();
+        // Stores time in Epoch time, since it's processed faster
         var date = Math.floor(raw_date.getTime() / 1000);
         var title = btitle.val();
-        var payload = {
+        // Packs data into Object to parse it on
+        var blogpack = {
             "title": title,
             "content": output,
             "date": date
         };
 
-        var url = "{{ url_for('api.blog_new') }}"
-
+        // Checks if all fields are filled
         if (output == "" || title == "") {
             alert("Preden objaviš vnos, prosim, izpolni manjkajoče okence.\nNamig: dve okenci sta - naslov in vsebina.");
         } else {
             $("#confirm").css("display", "block");
+            // Uses function (defined in register.html), which handles requests
             ledinaAjax(
-                "POST", url, payload,
+                "POST", url, blogpack,
 
                 function(response) {
+                    console.log("Poštar je odnesel paketek.");
                     console.log(response.status);
                     console.log(response.responseText);
                 }

@@ -22,34 +22,34 @@
 {% block scripts %}
 
 <script>
-
     $(document).ready(function () {
         var btitle = $("#title");
         var bdata = $("#data");
         var bcontent = $("#content");
-
+        // Since ID is stored in URL, it gets it from there
         var id = window.location.search.replace("?id=", "");
 
-        $.getJSON("{{ url_for('api.blog_get') }}", function (pack) {
-
-            for (x in pack) {
-                comparableID = x.replace("blog:", "")
+        // TODO: Change to ledinaAjax, otherwise Simon murders someone
+        $.getJSON("{{ url_for('api.blog_get') }}", function (blogpack) {
+            for (x in blogpack) {
+                comparableID = x.replace("blog:", "");
                 if (comparableID === id) {
-                    var array = pack[x];
+                    var array = blogpack[x];
                     var epoch_date = array["date"];
                     var title = array["title"];
                     var content = array["content"];
+                    // Epoch time to my time conversion
                     var myDate = new Date(epoch_date *1000);
                     var date_str = myDate.toLocaleString();
 
                     btitle.append(title);
                     bcontent.append(content);
                     bdata.append("<p>" + date_str + "</p>");
-
+                    // Necessary in case tables are present inside content
                     $("table").addClass( "table" );
 
-
                 } else {
+                    alert("Please, quit life.");
                 }
             }
 

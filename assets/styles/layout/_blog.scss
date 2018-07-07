@@ -2,6 +2,7 @@
  Blog styling
 \*----------------------------------*/
 
+// Used in blog_mainpage.html, blog_writingpage.html, blog_sample.html
 .blog {
     margin: 30px 15%;
     box-shadow: 0 0 10px transparentize($color-black, 0.5);
@@ -74,7 +75,7 @@
         min-height: 100px;
     }
 
-
+    // Used in blog_mainpage.html in each month/year section
     &__posts {
         border-top: 1px solid $color-jungle-green;
         padding: 0 20%;
@@ -94,11 +95,13 @@
         }
     }
 
+    // Used in blog_sample.html, at the date/author section
     &__data {
         font-size: 0.7em;
         color: darken($color-beige, 20);
     }
 
+    // Used in blog_writingpage.html for markdown sidebar
     &__help {
         position: fixed;
         top: 0;
