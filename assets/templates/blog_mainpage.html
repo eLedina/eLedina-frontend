@@ -65,29 +65,29 @@
 
 
                 var yearExists = document.getElementById(year);
-                var monthExists = document.getElementById(month);
+                var monthExists = document.getElementById(month + year);
                 if (yearExists == null) {
                     $("#blog").append('<div id="' + year + '"><h2>' + year + '</h2><div id="months' + year + '"></div></div>')
 
                     if (monthExists == null) {
-                        $("#months" + year).append('<div class="blog__posts" id="' + month + '"><div class="blog__posts--month"><h3>' + month_name + '</h3></div><div class="blog__posts--dates" id="posts' + month.replace('.','') + '"></div></div>');
-                        var posts = "#posts" + month.replace('.','');
+                        $("#months" + year).append('<div class="blog__posts" id="' + month + year + '"><div class="blog__posts--month"><h3>' + month_name + '</h3></div><div class="blog__posts--dates" id="posts' + month.replace('.','') + year + '"></div></div>');
+                        var posts = "#posts" + month.replace('.','') + year;
                         $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
 
                     } else {
-                        var posts = "#posts" + month.replace('.','');
+                        var posts = "#posts" + month.replace('.','') + year;
                         $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
                     }
 
                 } else {
 
                     if (monthExists == null) {
-                        $("#months" + year).append('<div class="blog__posts" id="' + month + '"><div class="blog__posts--month"><h3>' + month_name + '</h3></div><div class="blog__posts--dates" id="posts' + month.replace('.','') + '"></div></div>');
-                        var posts = "#posts" + month.replace('.','');
+                        $("#months" + year).append('<div class="blog__posts" id="' + month + year + '"><div class="blog__posts--month"><h3>' + month_name + '</h3></div><div class="blog__posts--dates" id="posts' + month.replace('.','') + year + '"></div></div>');
+                        var posts = "#posts" + month.replace('.','') + year;
                         $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
 
                     } else {
-                        var posts = "#posts" + month.replace('.','');
+                        var posts = "#posts" + month.replace('.','') + year;
                         $(posts).append("<div class='flex'><p>" + day + "</p><a href='blogs/blog_sample.html?id=" + id + "'>" + title + "</a></div>");
                     }
 

@@ -20,17 +20,97 @@
                 <textarea name="Text1" class="textarea" id="inputContent"></textarea>
             </div>
             <button type="button" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
+            <div style="display: none;color: green;" id="confirm">
+                Vnos uspešno poslan!
+            </div>
         </form>
 
+    </div>
+
+    <div class="blog__help" id="help">
+        <h2>Pomoč pri uporabi Markdowna</h2>
+        <div class="">
+            <table class="table">
+                <tr>
+                    <th>Vrste</th>
+                    <th>Oznaka</th>
+                    <th>Več o tem</th>
+                </tr>
+                <tr>
+                    <td>Naslovi</td>
+                    <td># Naslov 1 , ## Naslov 2 ...</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers" target="_blank">Headers</a> </td>
+                </tr>
+                <tr>
+                    <td>Poudarki</td>
+                    <td>*Tekst* = <i>ležeča pisava</i> <br> **Tekst** = <strong>odebeljena pisava</strong> <br> ~~Tekst~~ = <del>prečrtano besedilo</del></td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#emphasis" target="_blank">Emphasis</a></td>
+                </tr>
+                <tr>
+                    <td>Seznami</td>
+                    <td>1. predmet<br> 2. predmet<br>* x predmet = &#9679; x predmet<br>Namig: če sredi seznama eno vrstico označiš z ⋅⋅⋅, bo imela vlogo paragrafa.</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists" target="_blank">Lists</a> </td>
+                </tr>
+                <tr>
+                    <td>Povezave</td>
+                    <td>http://www.google.si bo samodejno delujoča povezava. <br> <code>[Klikni tole.](http://www.google.si)</code> = <a href="http://www.google.si" target="_blank">Klikni tole.</a></td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links" target="_blank">Links</a> </td>
+                </tr>
+                <tr>
+                    <td>Slike</td>
+                    <td><code>![](URL-povezava-do-slike "Besedilo slike")</code></td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images" target="_blank">Images</a> </td>
+                </tr>
+                <tr>
+                    <td>Koda</td>
+                    <td>Za označevanje kode/česa drugega uporabiš: <br>`Tole je koda` - za eno vrstico <br> ```Tole je večvrstična koda.``` - za več vrstic</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code-and-syntax-highlighting" target="_blank">Code</a> </td>
+                </tr>
+                <tr>
+                    <td>Preglednice</td>
+                    <td>Več na povezavi</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables" target="_blank">Tables</a> </td>
+                </tr>
+                <tr>
+                    <td>Citati</td>
+                    <td>Citate pišeš s "> To je citat."</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#blockquotes" target="_blank">Quotes</a> </td>
+                </tr>
+                <tr>
+                    <td>Horizontalno pravilo</td>
+                    <td>Ustvari črte, ki ločujejo vrstice. <br>Uporabi ali --- ali *** ali ___ (3 ali več).</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#horizontal-rule" target="_blank">Horizontal rule</a> </td>
+                </tr>
+                <tr>
+                    <td>Nove vrstice</td>
+                    <td>1 vrstica razmaka - isti paragraf, 2 vrstici razmaka - nov paragraf.</td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#line-breaks" target="_blank">Line breaks</a> </td>
+                </tr>
+                <tr>
+                    <td>Dodajanje videoposnetkov</td>
+                    <td>1. Pojdi na YouTube <br>2. Na strani pod posnetkom poišči možnost "embed" oz. "vdelaj". <br>3. Skopiraj kodo in jo prilepi v blog.<br>Spodaj je prikazano pridobivanje posnetka z YouTuba:<br> <img src="{{ url_for('static', filename='images/yt_URL_copy.png') }}" width="500"> </td>
+                    <td> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#youtube-videos" target="_blank">YouTube videos</a> </td>
+                </tr>
+            </table>
+            <div class="blog__help--button" id="open_help">
+                {{ svgs.arrow_left() }}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+    $("#open_help").click(function () {
+        $("#help").toggleClass("blog__help--open");
+        $("#open_help").toggleClass("blog__help--button---open");
+    })
+
     var submitBtn = $("#submitBtn");
     var btitle = $("#inputTitle");
     var bcontent = $("#inputContent");
+    var upload = true;
 
     var converter = new showdown.Converter();
     // Disables newlines
@@ -60,28 +140,30 @@
     submitBtn.click(function () {
         var text = bcontent.val();
         var output = converter.makeHtml(text);
-        console.log(output);
         var raw_date = new Date();
         var date = Math.floor(raw_date.getTime() / 1000);
+        var title = btitle.val();
         var payload = {
-            "title": btitle.val(),
+            "title": title,
             "content": output,
             "date": date
         };
 
         var url = "{{ url_for('api.blog_new') }}"
 
-        ledinaAjax(
-            "POST", url, payload,
+        if (output == "" || title == "") {
+            alert("Preden objaviš vnos, prosim, izpolni manjkajoče okence.\nNamig: dve okenci sta - naslov in vsebina.");
+        } else {
+            $("#confirm").css("display", "block");
+            ledinaAjax(
+                "POST", url, payload,
 
-            function(response) {
-                console.log("Fuckin did it!");
-
-                console.log(response.status);
-
-                console.log(response.responseText);
-            }
-        );
+                function(response) {
+                    console.log(response.status);
+                    console.log(response.responseText);
+                }
+            );
+        }
     });
 </script>
 {% endblock %}
