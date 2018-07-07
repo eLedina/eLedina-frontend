@@ -14,7 +14,9 @@ const MIN_USERNAME_LEN = 6
     , MAX_NAME_LEN = MAX_SURNAME_LEN = 30
     , MIN_NAME_LEN = MIN_SURNAME_LEN = 2
     , MAX_PASSWORD_LEN = 254
-    , MIN_PASSWORD_LEN = 8;
+    , MIN_PASSWORD_LEN = 8
+    , MIN_EMAIL_LEN = 3
+    , MAX_EMAIL_LEN = 254;
 
 // Check if 'email' is a valid e-mail
 const email_test = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

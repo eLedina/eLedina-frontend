@@ -41,7 +41,9 @@
                     <label>Ponovi geslo</label>
                     <span class="err">Gesli se ne ujemata!</span>
                 </div>
+                <!-- SUBMIT BUTTON -->
                 <span id="sumbitBtn" class="btn__main blue">REGISTRIRAJ ME</span>
+                <!-- STATUS RESPONSES -->
                 <span id="errorBox">Prišlo je do napake pri registraciji.</span>
                 <span id="successBox">Registracija je uspela! Sedaj vas bo preusmerilo...</span>
             </form>
@@ -63,14 +65,14 @@
     const spanUsername = $("#inputUsername ~ span.err")
         , spanName = $("#inputName ~ span.err")
         , spanSurname = $("#inputSurname ~ span.err")
-        , spanEmail = $("#inputEmail ~ span.err")
-        , spanPassword = $("#inputPassword ~ span.err")
-        , spanPasswordC = $("#inputPasswordC ~ span.err");
+        //, spanEmail = $("#inputEmail ~ span.err")
+        , spanPassword = $("#inputPassword ~ span.err");
+        //, spanPasswordC = $("#inputPasswordC ~ span.err");
 
     const errorBox = $("#errorBox")
         , successBox = $("#successBox");
 
-    // Prevent the form from submitting (only used for accessibility purposes)
+    // Prevent the form from submitting (only used for accessibility purposes - autocomplete, etc...)
     $("#accessibilityForm").submit(function (e) {
         e.preventDefault();
     });
@@ -154,13 +156,13 @@
 
     function anyInvalid() {
         // if any fields are invalid do not continue
-        return !(inpUsername.hasClass("invalid") || inpName.hasClass("invalid")
+        return (inpUsername.hasClass("invalid") || inpName.hasClass("invalid")
             || inpSurname.hasClass("invalid") || inpEmail.hasClass("invalid")
             || inpPassword.hasClass("invalid") || inpPasswordC.hasClass("invalid"));
 
     }
 
-    fnValidate = function () {checkValidity()};
+    fnValidate = function () { checkValidity() };
 
     inpUsername.focusout(fnValidate);
     inpName.focusout(fnValidate);
@@ -172,10 +174,8 @@
     // submit form
     submitBtn.click(function (e) {
         // Verify form validity
+        // if any of the fields is invalid, this does not continue
         if (!anyInvalid()) {
-            e.preventDefault();
-        }
-        else {
             var payload = {
                 "username": inpUsername.val(),
                 "name": inpName.val(),
@@ -186,13 +186,10 @@
             var url = "{{ url_for('api.register') }}"
               , type = "POST";
 
-            ledinaAjax(
-                type,  url, payload,
+            ledinaAjax(type, url, payload,
                 function (resp) {
                     console.log("Register sent! (status code " + resp.status + ")");
-
                     var data = JSON.parse(resp.responseText);
-                    console.debug(data);
 
                     if (resp.status !== 200) {
                         // There was an error, check status
