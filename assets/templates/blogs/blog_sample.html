@@ -7,19 +7,66 @@
     <h1 class="text-center">Blog</h1>
 
     <div class="blog">
-        <h2 class="">Naslov bloga</h2>
+        <h2 id="title"></h2>
 
-        <div class="blog__data mb30">
-            <p>Avtor: Grimps</p>
-            <p>Datum: 30. 6. 2018</p>
+        <div class="blog__data mb30" id="data">
         </div>
 
-        <div class="">
-            <img src="{{ url_for('static', filename='images/eledina_icon_header.png') }}" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div id="content">
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    $(document).ready(function () {
+        var btitle = $("#title");
+        var bdata = $("#data");
+        var bcontent = $("#content");
+        // Since ID is stored in URL, it gets it from there
+        var id = window.location.search.replace("?id=", "");
+        var url = "{{ url_for('api.blog_get') }}";
+        var bpack = {};
+
+        // TODO: Change to ledinaAjax, otherwise Simon murders someone
+        ledinaAjax(
+            "GET", url, bpack,
+            function(response) {
+                console.log("Poštar je odnesel paketek.");
+                console.log(response.status);
+                console.log(response.responseText);
+
+                var jsonified = JSON.parse(response.responseText);
+
+                for (x in jsonified) {
+                    comparableID = x.replace("blog:", "");
+                    if (comparableID === id) {
+                        var array = jsonified[x];
+                        var epoch_date = array["date"];
+                        var title = array["title"];
+                        var content = array["content"];
+                        // Epoch time to my time conversion
+                        var myDate = new Date(epoch_date *1000);
+                        var date_str = myDate.toLocaleString();
+
+                        btitle.append(title);
+                        bcontent.append(content);
+                        bdata.append("<p>" + date_str + "</p>");
+                        // Necessary in case tables are present inside content
+                        $("table").addClass( "table" );
+
+                    } else {
+                        alert("Please, quit life.");
+                    }
+                }
+            }
+        );
+
+    });
+
+</script>
 
 {% endblock %}
