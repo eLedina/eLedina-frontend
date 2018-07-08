@@ -3,13 +3,13 @@
 {% block title %}Registracija{% endblock %}
 {% block content %}
 
-<div class="body flex flex--column flex--center body__login--height">
+<div class="body flex flex--column flex--center body__auth--fullh">
     <div class="flex flex--middle flex--column mb30">
         <h1>Registracija</h1>
         <p>Nov/a tukaj? Kar naprej!</p>
     </div>
     <div class="flex flex--center">
-        <div class="body__login">
+        <div class="body__auth">
             <form id="accessibilityForm" class="mb30 mt10 flex flex--column flex--middle">
                 <div class="input mb15" id="inp">
                     <input id="inputUsername" type="text" name="username" required>
@@ -41,7 +41,9 @@
                     <label>Ponovi geslo</label>
                     <span class="err">Gesli se ne ujemata!</span>
                 </div>
+                <!-- SUBMIT BUTTON -->
                 <span id="sumbitBtn" class="btn__main blue">REGISTRIRAJ ME</span>
+                <!-- STATUS RESPONSES -->
                 <span id="errorBox">Prišlo je do napake pri registraciji.</span>
                 <span id="successBox">Registracija je uspela! Sedaj vas bo preusmerilo...</span>
             </form>
@@ -52,19 +54,6 @@
 
 {% block scripts %}
 <script>
-    const MIN_USERNAME_LEN = 6
-        , MAX_USERNAME_LEN = 20
-        , MAX_NAME_LEN = MAX_SURNAME_LEN = 30
-        , MIN_NAME_LEN = MIN_SURNAME_LEN = 2
-        , MAX_PASSWORD_LEN = 254
-        , MIN_PASSWORD_LEN = 8;
-
-    // Check if 'email' is a valid e-mail
-    const email_test = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    function validateEmail(email) {
-        return email_test.test(email);
-    }
-
     const submitBtn = $("#sumbitBtn")
         , inpUsername = $("#inputUsername")
         , inpName = $("#inputName")
@@ -76,14 +65,14 @@
     const spanUsername = $("#inputUsername ~ span.err")
         , spanName = $("#inputName ~ span.err")
         , spanSurname = $("#inputSurname ~ span.err")
-        , spanEmail = $("#inputEmail ~ span.err")
-        , spanPassword = $("#inputPassword ~ span.err")
-        , spanPasswordC = $("#inputPasswordC ~ span.err");
+        //, spanEmail = $("#inputEmail ~ span.err")
+        , spanPassword = $("#inputPassword ~ span.err");
+        //, spanPasswordC = $("#inputPasswordC ~ span.err");
 
     const errorBox = $("#errorBox")
         , successBox = $("#successBox");
 
-    // Prevent the form from submitting (only used for accessibility purposes)
+    // Prevent the form from submitting (only used for accessibility purposes - autocomplete, etc...)
     $("#accessibilityForm").submit(function (e) {
         e.preventDefault();
     });
@@ -167,13 +156,13 @@
 
     function anyInvalid() {
         // if any fields are invalid do not continue
-        return !(inpUsername.hasClass("invalid") || inpName.hasClass("invalid")
+        return (inpUsername.hasClass("invalid") || inpName.hasClass("invalid")
             || inpSurname.hasClass("invalid") || inpEmail.hasClass("invalid")
             || inpPassword.hasClass("invalid") || inpPasswordC.hasClass("invalid"));
 
     }
 
-    fnValidate = function () {checkValidity()};
+    fnValidate = function () { checkValidity() };
 
     inpUsername.focusout(fnValidate);
     inpName.focusout(fnValidate);
@@ -185,10 +174,8 @@
     // submit form
     submitBtn.click(function (e) {
         // Verify form validity
+        // if any of the fields is invalid, this does not continue
         if (!anyInvalid()) {
-            e.preventDefault();
-        }
-        else {
             var payload = {
                 "username": inpUsername.val(),
                 "name": inpName.val(),
@@ -199,57 +186,10 @@
             var url = "{{ url_for('api.register') }}"
               , type = "POST";
 
-            {#$.ajax({
-                type: "POST",
-                url:"{{ url_for("api.register") }}",
-                //dataType: "json",
-                contentType: "application/json",
-                async: "false",
-                data: JSON.stringify(payload),
-                // disable json parsing
-                dataType: "text",
-
-                complete: function (resp) {
-                    console.log("Register sent! (status code " + resp.status + ")");
-
-                    var data = JSON.parse(resp.responseText);
-                    console.debug(data);
-
-                    if (resp.status !== 200) {
-                        // There was an error, check status
-
-                        // 403 Forbidden
-                        if (resp.status === 403) {
-                            // username already exists
-                            if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
-                                errorBox.text("Uporabniško ime je že zasedeno.")
-                            }
-                            // email already registered
-                            else if (data.status === StatusTypes.EMAIL_ALREADY_REGISTERED) {
-                                errorBox.text("Ta e-poštni naslov je že registriran.")
-                            }
-                        }
-
-                        // show error
-                        successBox.removeClass("visible");
-                        errorBox.addClass("visible");
-
-                        throw "There was an error while registering: status code " + resp.status;
-                    } else {
-                        errorBox.removeClass("visible");
-                        successBox.addClass("visible");
-                    }
-
-                }
-            });#}
-
-            ledinaAjax(
-                type,  url, payload,
+            ledinaAjax(type, url, payload,
                 function (resp) {
                     console.log("Register sent! (status code " + resp.status + ")");
-
                     var data = JSON.parse(resp.responseText);
-                    console.debug(data);
 
                     if (resp.status !== 200) {
                         // There was an error, check status

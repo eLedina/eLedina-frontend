@@ -3,27 +3,125 @@
 {% block title %}Prijava{% endblock %}
 {% block content %}
 
-<div class="body flex flex--column flex--center body__login--height">
+<div class="body flex flex--column flex--center body__auth--fullh">
     <div class="flex flex--center mb30">
         <h1>Prijava</h1>
     </div>
     <div class="flex flex--center">
-        <div class="body__login">
-            <form class="mb30 mt10 flex flex--column flex--middle" method="post">
+        <div class="body__auth">
+            <form id="accesibilityForm" class="mb30 mt10 flex flex--column flex--middle">
                 <div class="input" id="inp">
-                    <input type="text" name="username" required>
-                    <label>Uporabniško ime</label>
-                    <span class="err">Vpiši uporabniško ime!</span>
+                    <input type="text" name="primary" id="inputPrimary" required>
+                    <label>Uporabniško ime / E-poštni naslov</label>
+                    <span class="err">Vpiši uporabniško ime ali e-poštni naslov!</span>
                 </div>
                 <div class="input" id="inp">
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" id="inputPassword" required>
                     <label>Geslo</label>
                     <span class="err">Vpiši geslo!</span>
                 </div>
-                <button type="submit" value="logIn" class="btn__main blue">PRIJAVI ME</button>
+                <!-- LOGIN BUTTON -->
+                <span id="submitBtn" class="btn__main blue">PRIJAVI ME</span>
+                <!-- STATUS RESPONSES -->
+                <span id="errorBox">E-poštni naslov/uporabniško ime in geslo sta neprevilna...</span>
+                <span id="successBox">Prijava uspešna! Sedaj vas bo preusmerilo...</span>
             </form>
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const submitBtn = $("#submitBtn")
+        , inpPrimary = $("#inputPrimary")
+        , inpPassword = $("#inputPassword");
+
+    const spanPrimary = $("#inputPrimary ~ span.err")
+        , spanPassword = $("#inputPassword ~ span.err");
+
+    const errorBox = $("#errorBox")
+        , successBox = $("#successBox");
+
+    $("#accessibilityForm").submit(function (e) {
+        e.preventDefault();
+    });
+
+
+    function checkValidity() {
+        // PRIMARY
+        // Primary input should not be shorter than the minimum email and not longer than the maximum length
+        var primaryLen = inpPrimary.val().length;
+        if (primaryLen !== 0 && primaryLen < MIN_EMAIL_LEN) {
+            spanPrimary.text("Uporabniško ime / e-poštni naslov sta prekratka!");
+            spanPrimary.addClass("invalid");
+        }
+        else if (primaryLen > MAX_EMAIL_LEN) {
+            spanPrimary.text("Uporabniško ime / e-poštni naslov sta predolga!");
+            spanPrimary.addClass("invalid");
+        }
+        else { spanPrimary.removeClass("invalid") }
+
+        // PASSWORD
+        var passwordLength = inpPassword.val().length;
+        if (passwordLength !== 0 && passwordLength < MIN_PASSWORD_LEN) {
+            spanPassword.text("Geslo je prekratko.");
+            spanPassword.addClass("invalid");
+        }
+        else if (passwordLength > MAX_PASSWORD_LEN) {
+            spanPassword.text("Geslo je predolgo.");
+            spanPassword.addClass("invalid");
+        }
+    }
+
+    function anyInvalid() {
+        // if any fields are invalid do not continue
+        return (inpPrimary.hasClass("invalid") || inpPassword.hasClass("invalid"));
+    }
+
+    var fnValidate = function() { checkValidity() };
+
+    inpPrimary.focusout(fnValidate);
+    inpPassword.focusout(fnValidate);
+
+    submitBtn.click(function () {
+        if(!anyInvalid()) {
+            var payload = {
+                "primary": inpPrimary.val(),
+                "password": inpPassword.val()
+            };
+
+            var url = "{{ url_for('api.login') }}"
+              , type = "POST";
+
+            ledinaAjax(type, url, payload,
+                function (resp) {
+                    console.log("Login sent! (status code " + resp.status + ")");
+                    var data = JSON.parse(resp.responseText);
+
+                    if (resp.status !== 200) {
+                        if (resp.status === 403) {
+                            if (data.status === StatusTypes.INVALID_ARGUMENT) {
+                                errorBox.text("Eno od polj vsebuje nedovoljene podatke!")
+                            }
+                            else if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
+                                errorBox.text("Nepravilni podatki za prijavo!")
+                            }
+                        }
+
+                        errorBox.addClass("visible");
+                        successBox.removeClass("visible");
+                    }
+                    else {
+                        errorBox.removeClass("visible");
+                        successBox.addClass("visible");
+                    }
+            })
+        }
+    })
+
+
+
+</script>
 {% endblock %}

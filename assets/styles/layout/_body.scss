@@ -10,12 +10,11 @@
         font-size: 4em;
     }
 
-    // login.html
-    &__login {
+    // login.html and register.html
+    &__auth {
         width: 400px;
-
-        // login.html + register.html
-        &--height {
+        
+        &--fullh {
             height: 100vh;
         }
         
