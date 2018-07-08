@@ -29,38 +29,30 @@
         // Since ID is stored in URL, it gets it from there
         var id = window.location.search.replace("?id=", "");
         var url = "{{ url_for('api.blog_get') }}";
-        var bpack = {};
 
-        // TODO: Change to ledinaAjax, otherwise Simon murders someone
         ledinaAjax(
-            "GET", url, bpack,
+            "POST", url, id,
             function(response) {
-                console.log("Poštar je odnesel paketek.");
                 console.log(response.status);
                 console.log(response.responseText);
 
                 var jsonified = JSON.parse(response.responseText);
 
-                for (x in jsonified) {
-                    comparableID = x.replace("blog:", "");
-                    if (comparableID === id) {
-                        var array = jsonified[x];
-                        var epoch_date = array["date"];
-                        var title = array["title"];
-                        var content = array["content"];
-                        // Epoch time to my time conversion
-                        var myDate = new Date(epoch_date *1000);
-                        var date_str = myDate.toLocaleString();
+                if (response.responseText == "Nope") {
+                    alert("It seems there's no blog with this ID.")
+                } else {
+                    var epoch_date = jsonified["date"];
+                    var title = jsonified["title"];
+                    var content = jsonified["content"];
+                    // Epoch time to my time conversion
+                    var myDate = new Date(epoch_date *1000);
+                    var date_str = myDate.toLocaleString();
 
-                        btitle.append(title);
-                        bcontent.append(content);
-                        bdata.append("<p>" + date_str + "</p>");
-                        // Necessary in case tables are present inside content
-                        $("table").addClass( "table" );
-
-                    } else {
-                        alert("Please, quit life.");
-                    }
+                    btitle.append(title);
+                    bcontent.append(content);
+                    bdata.append("<p>" + date_str + "</p>");
+                    // Necessary in case tables are present inside content
+                    $("table").addClass( "table" );
                 }
             }
         );
