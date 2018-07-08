@@ -18,6 +18,20 @@
     $(document).ready(function () {
         var bpack = {};
         var url = "{{ url_for('api.blog_get') }}";
+        var months = {
+            1.: "Januar",
+            2.: "Februar",
+            3.: "Marec",
+            4.: "April",
+            5.: "Maj",
+            6.: "Junij",
+            7.: "Julij",
+            8.: "Avgust",
+            9.: "September",
+            10.: "Oktober",
+            11.: "November",
+            12.: "December"
+        };
         ledinaAjax("GET", url, bpack,
             function(response) {
                 console.log("Poštar je odnesel paketek.");
@@ -41,20 +55,6 @@
                     var month = date_array[1];
                     var day = date_array[0];
 
-                    var months = {
-                        1.: "Januar",
-                        2.: "Februar",
-                        3.: "Marec",
-                        4.: "April",
-                        5.: "Maj",
-                        6.: "Junij",
-                        7.: "Julij",
-                        8.: "Avgust",
-                        9.: "September",
-                        10.: "Oktober",
-                        11.: "November",
-                        12.: "December"
-                    };
 
                     var month_name
                     for (mnumber in months) {
