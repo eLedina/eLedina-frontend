@@ -28,32 +28,42 @@
         var bcontent = $("#content");
         // Since ID is stored in URL, it gets it from there
         var id = window.location.search.replace("?id=", "");
+        var url = "{{ url_for('api.blog_get') }}";
+        var bpack = {};
 
         // TODO: Change to ledinaAjax, otherwise Simon murders someone
-        $.getJSON("{{ url_for('api.blog_get') }}", function (blogpack) {
-            for (x in blogpack) {
-                comparableID = x.replace("blog:", "");
-                if (comparableID === id) {
-                    var array = blogpack[x];
-                    var epoch_date = array["date"];
-                    var title = array["title"];
-                    var content = array["content"];
-                    // Epoch time to my time conversion
-                    var myDate = new Date(epoch_date *1000);
-                    var date_str = myDate.toLocaleString();
+        ledinaAjax(
+            "GET", url, bpack,
+            function(response) {
+                console.log("Poštar je odnesel paketek.");
+                console.log(response.status);
+                console.log(response.responseText);
 
-                    btitle.append(title);
-                    bcontent.append(content);
-                    bdata.append("<p>" + date_str + "</p>");
-                    // Necessary in case tables are present inside content
-                    $("table").addClass( "table" );
+                var jsonified = JSON.parse(response.responseText);
 
-                } else {
-                    alert("Please, quit life.");
+                for (x in jsonified) {
+                    comparableID = x.replace("blog:", "");
+                    if (comparableID === id) {
+                        var array = jsonified[x];
+                        var epoch_date = array["date"];
+                        var title = array["title"];
+                        var content = array["content"];
+                        // Epoch time to my time conversion
+                        var myDate = new Date(epoch_date *1000);
+                        var date_str = myDate.toLocaleString();
+
+                        btitle.append(title);
+                        bcontent.append(content);
+                        bdata.append("<p>" + date_str + "</p>");
+                        // Necessary in case tables are present inside content
+                        $("table").addClass( "table" );
+
+                    } else {
+                        alert("Please, quit life.");
+                    }
                 }
             }
-
-        });
+        );
 
     });
 

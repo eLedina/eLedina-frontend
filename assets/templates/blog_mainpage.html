@@ -24,8 +24,10 @@
                 console.log(response.status);
                 console.log(response.responseText);
 
-                for (x in response.responseText) {
-                    var array = response.responseText[x];
+                var jsonified = JSON.parse(response.responseText);
+
+                for (x in jsonified) {
+                    var array = jsonified[x];
                     var epoch_date = array["date"];
                     var title = array["title"];
                     // Removes the unnecessary "blog:" at the beginning of ID
