@@ -109,7 +109,7 @@
         transform: translateX(610px);
         background-color: $color-white;
         width: 600px;
-        font-size: 12px;
+        font-size: 15px;
         z-index: 1;
         box-shadow: 0 0 10px transparentize($color-black, 0.5);
         @include transition();

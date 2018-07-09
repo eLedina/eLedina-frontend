@@ -40,12 +40,11 @@
 
                 var jsonified = JSON.parse(response.responseText);
 
-                for (x in jsonified) {
-                    var array = jsonified[x];
+                for (var id in jsonified) {
+                    var array = jsonified[id];
                     var epoch_date = array["date"];
                     var title = array["title"];
                     // Removes the unnecessary "blog:" at the beginning of ID
-                    var id = x.replace("blog:", "")
 
                     // Converts Epoch to mortal time
                     var myDate = new Date(epoch_date *1000);
