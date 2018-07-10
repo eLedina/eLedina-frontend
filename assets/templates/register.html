@@ -211,9 +211,28 @@
                         errorBox.addClass("visible");
 
                         throw "There was an error while registering: status code " + resp.status;
-                    } else {
-                        errorBox.removeClass("visible");
-                        successBox.addClass("visible");
+                    }
+                    // status 200 OK
+                    else {
+                        // Set token
+                        var token = data["token"];
+                        if (typeof token === "undefined") {
+                            throw "Error: token is undefined, even though status was 200 OK"
+                        }
+
+                        // User must have consented to cookies
+                        try {
+                            setUserToken(token);
+
+                            // Show success text box
+                            errorBox.removeClass("visible");
+                            successBox.addClass("visible");
+                        } catch {
+                            // user has not clicked accept
+                            successBox.removeClass("visible");
+                            errorBox.text("Niste še se strinjali z našimi piškotki! Pred prijavo ali registracijo prosimo potrdite svoje strinjanje.");
+                            errorBox.addClass("visible");
+                        }
                     }
                 })
         }
