@@ -1,24 +1,30 @@
 /*----------------------------------*\
     Header
 \*----------------------------------*/
+$svg-size: 30px;
+
 .header {
-    height: 100%;
-    width: 250px;
+    height: 100vh;
+    width: 180px;
     position: fixed;
     flex-flow: column;
     z-index: 0;
     top: 0;
     background-color: lighten($color-blue, 30);
 
-    a {
+    .links a {
         margin: 20px 0;
-        font-size: 1.7em;
+        font-size: 1.3em;
         color: darken($color-blue, 20);
         display: flex;
         align-items: center;
         cursor: pointer;
-        padding: 10px 0px 10px 10px;
+        padding: 10px 0 10px 10px;
         @include transition();
+        
+        span {
+            @include transition(.05s)
+        }
 
         &::before {
             display: none;
@@ -26,18 +32,21 @@
 
         &:hover {
             background-color: darken($color-blue, 20);
-            color: $color-white;
+            
+            span {
+                color: $color-white;
+            }
         }
 
         &:hover svg {
             path {
                 fill: $color-white;
-                @include transition();
+                @include transition(.1s);
             }
         }
 
         svg {
-            height: 50px;
+            height: $svg-size;
             @include transition();
 
             path {
@@ -53,56 +62,80 @@
 }
 
 .burger {
-    width: 50px;
-    height: 44px;
+    $burger-line-h: 5px;
+    $burger-line-spacing: 7.5px;
+    
+    width: $svg-size;
+    height: $svg-size;
+    
     margin: 20px 10px;
     position: relative;
     cursor: pointer;
+    
+    @keyframes open-anim1 {
+        0% {
+            transform: none;
+        }
+        50% {
+            transform: translateY($burger-line-h+$burger-line-spacing);
+        }
+        100% {
+            transform: translateY($burger-line-h+$burger-line-spacing) rotate(45deg);
+        }
+    }
+    
+    @keyframes open-anim2 {
+        0% {
+            transform: none;
+        }
+        50% {
+            transform: translateY(-($burger-line-h+$burger-line-spacing));
+        }
+        100% {
+            transform: translateY(-($burger-line-h+$burger-line-spacing)) rotate(-45deg);
+        }
+    }
 
     span {
         position: absolute;
-        height: 7px;
-        width: 50px;
-        border-radius: 3px;
+        height: $burger-line-h;
+        width: $svg-size;
+        border-radius: 1px;
         background-color: darken($color-blue, 20);
         @include transition();
 
         &:nth-child(2) {
-            top: 17px;
+            top: $burger-line-h + $burger-line-spacing;
+            @include transition(none);
         }
         &:nth-child(3) {
-            top: 35px;
+            top: $burger-line-h*2 + $burger-line-spacing*2;
         }
     }
-}
 
-.burger-open {
-    width: 50px;
-    height: 44px;
-    margin: 20px 10px;
-    position: relative;
-    cursor: pointer;
-
-    span {
-        position: absolute;
-        height: 7px;
-        width: 50px;
-        border-radius: 3px;
-        background-color: darken($color-blue, 20);
-        @include transition();
-
-        &:nth-child(1) {
-            top: 0px;
-            transform: translateY(18px) rotate(45deg);
-        }
-
-        &:nth-child(2) {
-            top: 17px;
-            opacity: 0;
-        }
-        &:nth-child(3) {
-            top: 35px;
-            transform: translateY(-16px) rotate(-45deg);
+    &.open {
+        $custom-anim: cubic-bezier(.16,.84,.43,.94);
+        
+        span {
+            &:nth-child(1) {
+                animation: open-anim1 .4s $custom-anim;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+                animation-direction: normal;
+            }
+    
+            &:nth-child(2) {
+                opacity: 0;
+                @include transition(.7s);
+            }
+            
+            &:nth-child(3) {
+                animation: open-anim2 .4s $custom-anim;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+                animation-direction: normal;
+            }
         }
     }
+
 }

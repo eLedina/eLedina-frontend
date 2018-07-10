@@ -164,10 +164,10 @@ main {
     overflow: auto;
 
     @include transition();
-    @include transform(translateX(70px));
+    @include transform(translateX(50px));
 
     &.display {
-        @include transform(translateX(250px))
+        @include transform(translateX(180px));
     }
 
     &.noside {
