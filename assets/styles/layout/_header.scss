@@ -2,6 +2,7 @@
     Header
 \*----------------------------------*/
 $icon-size: 32px;
+$icon-size-small: 28px;
 
 .header {
     height: 100vh;
@@ -53,7 +54,70 @@ $icon-size: 32px;
                 }
             }
         }
+    }
+    
+    // USER-RELATED stuff
+    .user {
+        // hidden when the header is collapsed
+        opacity: 0;
+        @include transition(.3s);
         
+        &.visible {
+            opacity: 1;
+        }
+        
+        margin: 6px 16px;
+        
+        &--as {
+            font-size: 0.7em;
+            font-weight: $light;
+            letter-spacing: 0.1px;
+        }
+        
+        &--name {
+            font-size: 0.9em;
+            font-weight: $bold;
+        }
+        
+        &--actions {
+            margin: 8px 30px;
+            width: auto;
+        }
+        
+        svg {
+            height: $icon-size-small;
+            
+            path {
+                fill: darken($color-blue, 28);
+                @include transition();
+            }
+        }
+        
+        // spans containing svgs
+        #logout, #settings {
+            $padding: 3px;
+            
+            width: $icon-size-small + 2*$padding;
+            height: $icon-size-small + 2*$padding;
+            padding: $padding;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            cursor: pointer;
+            border-radius: 3px;
+            background-color: transparent;
+            @include transition();
+            
+            &:hover {
+                background-color: transparentize(darken($color-blue, 25), 0.7);
+                
+                svg path {
+                    fill: darken($color-blue, 22);
+                }
+            }
+        }
     }
 }
 
@@ -209,18 +273,18 @@ $icon-size: 32px;
     
     &.opened span {
         &:nth-child(1) {
-            animation: open-anim-top .4s $custom-anim-curve;
+            animation: open-anim-top .5s $custom-anim-curve;
             @include fix-animation();
         }
         
         &:nth-child(2) {
             @include transition(.7s);
-            animation: open-anim-middle .4s $custom-anim-curve;
+            animation: open-anim-middle .5s $custom-anim-curve;
             @include fix-animation();
         }
         
         &:nth-child(3) {
-            animation: open-anim-bottom .4s $custom-anim-curve;
+            animation: open-anim-bottom .5s $custom-anim-curve;
             @include fix-animation();
         }
     }
