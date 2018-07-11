@@ -89,10 +89,13 @@ img {
 }
 a {
     text-decoration: none;
-    color: $color-fern-green;
-    font-weight: bold;
-    position: relative;
+    font-weight: $bold;
     font-size: inherit;
+}
+
+a.link {
+    color: $color-fern-green;
+    position: relative;
 
     &::before {
         content: "";
@@ -108,6 +111,7 @@ a {
         width: 100%;
     }
 }
+
 button {
     border: 0;
     margin: 0;
@@ -162,12 +166,15 @@ main {
     background-color: $color-white;
     width: 100%;
     overflow: auto;
+    
+    $header-closed: 54px;
+    $header-expanded: 180px;
 
     @include transition();
-    @include transform(translateX(50px));
-
-    &.display {
-        @include transform(translateX(180px));
+    @include transform(translateX($header-closed));
+    
+    &.aside {
+        @include transform(translateX($header-expanded));
     }
 
     &.noside {

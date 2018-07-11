@@ -1,7 +1,7 @@
 /*----------------------------------*\
     Header
 \*----------------------------------*/
-$svg-size: 30px;
+$icon-size: 32px;
 
 .header {
     height: 100vh;
@@ -13,97 +13,172 @@ $svg-size: 30px;
     background-color: lighten($color-blue, 30);
 
     .links a {
-        margin: 20px 0;
-        font-size: 1.3em;
-        color: darken($color-blue, 20);
         display: flex;
         align-items: center;
         cursor: pointer;
-        padding: 10px 0 10px 10px;
+        // minimal margin
+        margin-bottom: 2px;
+        padding: 12px 0 10px 10px;
+        
+        font-size: 1.25em;
+        color: darken($color-blue, 20);
         @include transition();
         
         span {
-            @include transition(.05s)
+            font-family: $font-secondary, $font-tertiary;
+            padding-left: 18px;
+            @include transition();
+            @include transition(.05s);
         }
-
-        &::before {
-            display: none;
-        }
-
-        &:hover {
-            background-color: darken($color-blue, 20);
-            
-            span {
-                color: $color-white;
-            }
-        }
-
-        &:hover svg {
-            path {
-                fill: $color-white;
-                @include transition(.1s);
-            }
-        }
-
+        
         svg {
-            height: $svg-size;
+            height: $icon-size;
             @include transition();
 
             path {
                 fill: darken($color-blue, 20);
             }
         }
-
-        span {
-            padding-left: 15px;
-            @include transition();
+    
+        &:hover {
+            background-color: darken($color-blue, 20);
+        
+            span {
+                color: $color-white;
+            }
+            svg {
+                path {
+                    fill: $color-white;
+                    @include transition(.1s);
+                }
+            }
         }
+        
     }
 }
 
 .burger {
+    // 36px, 4px wider than other svgs
+    // this is why we move this 2px left to be centered
+    $burger-width: $icon-size*1.2;
+    $burger-height: $icon-size;
+    
     $burger-line-h: 5px;
     $burger-line-spacing: 7.5px;
     
-    width: $svg-size;
-    height: $svg-size;
+    width: $burger-width;
+    height: $burger-height;
     
-    margin: 20px 10px;
+    // see above
+    margin: 20px (10px - 2px);
     position: relative;
     cursor: pointer;
     
-    @keyframes open-anim1 {
-        0% {
-            transform: none;
+    ///////////////
+    // ANIMATIONS
+    ///////////////
+    
+    // width when lines are "collapsed" to the left
+    $line-closed-w: 2px;
+    
+    // this mixin generates an open animation
+    @mixin open-anim($name, $translateY, $rotate) {
+        @keyframes #{$name} {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY($translateY);
+            }
+            100% {
+                transform: translateY($translateY) rotate($rotate);
+            }
         }
-        50% {
-            transform: translateY($burger-line-h+$burger-line-spacing);
+    }
+    // generates animations for top and bottom line
+    @include open-anim("open-anim-top", $burger-line-h+$burger-line-spacing, 45deg);
+    @include open-anim("open-anim-bottom", -($burger-line-h+$burger-line-spacing), -45deg);
+    // open animation for middle line
+    @keyframes open-anim-middle {
+        0% {
+            transform: scaleX(1);
         }
         100% {
-            transform: translateY($burger-line-h+$burger-line-spacing) rotate(45deg);
+            transform: scaleX(0);
         }
     }
     
-    @keyframes open-anim2 {
-        0% {
-            transform: none;
-        }
-        50% {
-            transform: translateY(-($burger-line-h+$burger-line-spacing));
-        }
-        100% {
-            transform: translateY(-($burger-line-h+$burger-line-spacing)) rotate(-45deg);
+    
+    // this mixin generates a close animation
+    @mixin close-anim($name, $translateY, $rotate, $delay: 75%) {
+        // TODO
+        @keyframes #{$name} {
+            0% {
+                transform: translateY($translateY) rotate($rotate);
+            }
+            25% {
+                transform: translateY($translateY) rotate(0deg);
+                width: $burger-width;
+            }
+            50% {
+                transform: translateY($translateY) rotate(0deg);
+            }
+            51% {
+                transform: translateY($translateY) rotate(0deg);
+                width: $line-closed-w;
+            }
+            #{$delay} {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                width: $line-closed-w;
+            }
+            100% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                width: $burger-width;
+            }
         }
     }
+    // generates close animations for top and bottom line
+    @include close-anim("close-anim-top", $burger-line-h+$burger-line-spacing, 45deg, 60%);
+    @include close-anim("close-anim-bottom", -($burger-line-h+$burger-line-spacing), -45deg, 80%);
+    // close animations for middle line
+    @keyframes close-anim-middle {
+        0%, 30% {
+            width: $burger-width;
+        }
+        45% {
+            width: $line-closed-w;
+        }
+        70% {
+            transform: translateY(0) rotate(0deg) translateX(0);
+            width: $line-closed-w;
+        }
+        100% {
+            transform: translateY(0) rotate(0deg) translateX(0);
+            width: $burger-width;
+        }
+    }
+    
+    $custom-anim-curve: cubic-bezier(.16,.84,.43,.94);
+    
+    @mixin fix-animation() {
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-direction: normal;
+    }
 
+    
+    /////////////////
+    // BURGER LINES
+    /////////////////
+    
     span {
         position: absolute;
         height: $burger-line-h;
-        width: $svg-size;
+        width: $burger-width;
         border-radius: 1px;
         background-color: darken($color-blue, 20);
         @include transition();
-
+        
         &:nth-child(2) {
             top: $burger-line-h + $burger-line-spacing;
             @include transition(none);
@@ -112,30 +187,41 @@ $svg-size: 30px;
             top: $burger-line-h*2 + $burger-line-spacing*2;
         }
     }
-
-    &.open {
-        $custom-anim: cubic-bezier(.16,.84,.43,.94);
-        
-        span {
-            &:nth-child(1) {
-                animation: open-anim1 .4s $custom-anim;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-                animation-direction: normal;
-            }
     
-            &:nth-child(2) {
-                opacity: 0;
-                @include transition(.7s);
-            }
-            
-            &:nth-child(3) {
-                animation: open-anim2 .4s $custom-anim;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-                animation-direction: normal;
-            }
+    &.closed span {
+        &:nth-child(1) {
+            animation: close-anim-top .6s $custom-anim-curve;
+            @include fix-animation();
+        }
+        
+        &:nth-child(2) {
+            top: $burger-line-h + $burger-line-spacing;
+            animation: close-anim-middle .6s $custom-anim-curve;
+            transform-origin: center;
+            @include fix-animation();
+        }
+        &:nth-child(3) {
+            top: $burger-line-h*2 + $burger-line-spacing*2;
+            animation: close-anim-bottom .6s $custom-anim-curve;
+            @include fix-animation();
         }
     }
-
+    
+    &.opened span {
+        &:nth-child(1) {
+            animation: open-anim-top .4s $custom-anim-curve;
+            @include fix-animation();
+        }
+        
+        &:nth-child(2) {
+            @include transition(.7s);
+            animation: open-anim-middle .4s $custom-anim-curve;
+            @include fix-animation();
+        }
+        
+        &:nth-child(3) {
+            animation: open-anim-bottom .4s $custom-anim-curve;
+            @include fix-animation();
+        }
+    }
 }
