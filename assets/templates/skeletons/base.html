@@ -43,23 +43,26 @@
 <!-- header script -->
 <script>
 const burger = $(".burger")
+    , userInfo = $("#userInfo")
     , main = $("main");
 
 burger.click(function () {
     // detect state
     if (burger.hasClass("opened")) {
-        // play open animation and set main aside
+        // play close animation and set main to normal
         burger.removeClass("opened");
         burger.addClass("closed");
 
         main.removeClass("aside");
+        userInfo.removeClass("visible");
     }
     else {
-        // play close animation and set main to normal
+        // play open animation and set main aside
         burger.addClass("opened");
         burger.removeClass("closed");
 
         main.addClass("aside");
+        userInfo.addClass("visible");
     }
 
 });
