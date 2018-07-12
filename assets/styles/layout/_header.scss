@@ -12,6 +12,17 @@ $icon-size-small: 28px;
     z-index: 0;
     top: 0;
     background-color: lighten($color-blue, 30);
+    
+    .links {
+        position: relative;
+        // slide down when header is opened
+        top: -50px;
+        &.down {
+            top: 0;
+        }
+        
+        @include transition(.3s $ease-out-quint);
+    }
 
     .links a {
         display: flex;

@@ -13,8 +13,8 @@
         <span class="text-uppercase user--as">prijavljen kot</span>
         <span class="user--name">{{ g.user["name"] }}</span>
         <div class="flex flex--row flex--around user--actions">
-            <span id="settings">{{ svgs.settings_box() }}</span>
-            <span id="logout">{{ svgs.logout_variant() }}</span>
+            <a href="settings" id="settings">{{ svgs.settings_box() }}</a>
+            <a href="logout" id="logout">{{ svgs.logout_variant() }}</a>
         </div>
     </div>
 
@@ -42,10 +42,6 @@
         <a href="contacts">
             {{ svgs.contact() }}
             <span>Kontakti</span>
-        </a>
-        <a href="settings">
-            {{ svgs.settings() }}
-            <span>Nastavitve</span>
         </a>
     </div>
 </nav>
