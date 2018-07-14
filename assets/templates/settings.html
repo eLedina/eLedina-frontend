@@ -6,26 +6,74 @@
 <div class="flex flex--column flex--middle">
     <h1>Nastavitve</h1>
 
-    <div class="body__settings mt60">
-        <div class="input flex flex--middle mb30">
-            <p>Spremeni email:</p>
-            <input type="text" name="" value="">
+    <div class="body__settings mt60 flex flex--column flex--middle">
+        <!-- TODO cards -->
+
+        <div class="card">
+            <div class="title">Spremeni ime</div>
+            <div class="content aligner">
+                <p class="item">Sedanje ime:</p>
+                <span class="text-bold pl10 item">{{ g.user["name"] }}</span>
+
+                <p class="item nr">Novo ime:</p>
+                <div class="input mb10 item" id="inpNewName">
+                    <input type="text" placeholder="{{ g.user["name"] }}" required>
+                    <span class="err">Neveljavno uporabniško ime!</span>
+                </div>
+            </div>
+            <div class="bottom flex--column flex--center">
+                <span class="btn__main blue" id="nameChangeBtn">Spremeni ime</span>
+                <span class="infoBox" id="nameChangeSpan">Ime spremenjeno.</span>
+            </div>
         </div>
-        <div class="input flex flex--middle mb30">
-            <p>Spremeni geslo:</p>
-            <input type="text" name="" value="">
+
+        <div class="card green">
+            <div class="title">Spremeni e-poštni naslov</div>
+            <div class="content aligner">
+                <p class="item">Sedanji naslov:</p>
+                <span class="text-bold pl10 item">{{ g.user["email"] }}</span>
+
+
+                <p class="item nr">Novi naslov:</p>
+                <!-- prefill placeholder -->
+                <div class="input mb10 item" id="inpNewEmail">
+                    <input type="email" placeholder="{{ g.user["email"] }}" required>
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+            </div>
+            <div class="bottom flex--column flex--center">
+                <span class="btn__main green" id="emailChangeBtn">Spremeni e-poštni naslov</span>
+                <span class="infoBox" id="emailChangeSpan">E-poštni naslov spremenjen.</span>
+            </div>
         </div>
-        <div class="flex flex--middle mb30 input">
-            <p>Zahtevaj spremembo razreda*:</p>
-            <input type="text" name="" value="">
-            <button type="button" name="button" class="btn__main green">POŠLJI ZAHTEVO</button>
+
+        <div class="card dark-green">
+            <div class="title">Spremeni geslo</div>
+            <!-- needed to align inputs -->
+            <div class="content aligner">
+                <p class="item">Sedanje geslo: </p>
+                <div class="input mb10 item" id="inpNewEmail">
+                    <input type="password">
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+                
+                <p class="item nr">Novo geslo: </p>
+                <div class="input mb10 item" id="inpNewEmail">
+                    <input type="password">
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+                
+                <p class="item nr">Ponovitev gesla: </p>
+                <div class="input mb10 item" id="inpNewEmail">
+                    <input type="password">
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+            </div>
+            <div class="bottom flex--column flex--center">
+                <span class="btn__main dark-green" id="nameChangeBtn">Spremeni geslo</span>
+                <span class="infoBox" id="nameChangeSpan">Geslo spremenjeno.</span>
+            </div>
         </div>
-        <div class="">
-            <p>Tvoj opis samega sebe:</p>
-            <textarea class="textarea" name="name" rows="8" cols="80">
-            </textarea>
-        </div>
-        <button type="button" name="button" class="btn__main green">SHRANI NASTAVITVE</button>
     </div>
 
     <div class="body__settings--footnote mt30">
