@@ -13,8 +13,8 @@ textarea {
 .input {
 	font-size: 1.1em;
 	position: relative;
-	margin: 10px auto;
-	width: 100%;
+	margin: 10px;
+	//width: 100%;
 
 	input {
 		padding: 10px 10px;
@@ -36,7 +36,7 @@ textarea {
 		@include transition();
 	}
 
-	input:focus ~ label, input:valid ~ label {
+	input:focus ~ label, input:valid ~ label, label.alwaystop {
 		top: -11px;
 		font-size: 12px;
 		color: $color-blue;
@@ -66,9 +66,9 @@ textarea {
 
 	// Add .invalid class to input to display error
 	input.invalid ~ span.err {
-			opacity: 1;
-			animation: shake 1s;
-		}
+		opacity: 1;
+		animation: shake 1s;
+	}
 }
 
 .radio {
