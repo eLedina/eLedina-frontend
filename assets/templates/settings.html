@@ -13,7 +13,7 @@
             <div class="title">Spremeni ime</div>
             <div class="content aligner">
                 <p class="item">Sedanje ime:</p>
-                <span class="text-bold pl10 item">{{ g.user["username"] }}</span>
+                <span class="text-bold pl20 item" id="currentName">{{ g.user["username"] }}</span>
 
                 <p class="item nr">Novo ime:</p>
                 <div class="input mb10 item">
@@ -31,7 +31,7 @@
             <div class="title">Spremeni e-poštni naslov</div>
             <div class="content aligner">
                 <p class="item">Sedanji naslov:</p>
-                <span class="text-bold pl10 item">{{ g.user["email"] }}</span>
+                <span class="text-bold pl20 item" id="currentEmail">{{ g.user["email"] }}</span>
 
 
                 <p class="item nr">Novi naslov:</p>
@@ -108,6 +108,9 @@
     const infoChangeName = $("#nameChangeSpan")
         , infoChangeEmail = $("#emailChangeSpan")
         , infoChangePass = $("#passChangeSpan");
+
+    const currentName = $("#currentName")
+        , currentEmail = $("#currentEmail");
 
 
     function checkNameValidity() {
@@ -214,33 +217,15 @@
     inpPassConfirm.focusout(fnValidatePassword);
 
     function sendUserUpdate(fields, callback) {
-        var url = "{{ url_for('api.user_manage') }}";
+        var method = "PATCH",
+            url = "{{ url_for('api.user_manage') }}";
 
         ledinaAjax(
-            "PATCH", url, fields, function (resp) {
+            method, url, fields, function (resp) {
                 console.log("User update sent! (status code " + resp.status + ")");
                 var data = JSON.parse(resp.responseText);
 
                 callback(resp, data);
-
-                /*
-                if (resp.status !== 200) {
-                    // There was an error
-
-                    // 403 Forbidden
-                    if (resp.status === 403) {
-                        if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
-                            // Wrong passwordConfirm
-                        }
-                    }
-                    else if (resp.status === 400) {
-                        if (data.status === StatusTypes.INVALID_ARGUMENT) {
-                            // One of the arguments was invalid
-                        }
-                    }
-                }
-                */
-
             }
         )
     }
@@ -251,10 +236,7 @@
         if (inpName.hasClass("invalid")) {
             return;
         }
-
-        var fields = {
-            "username": inpName.val()
-        };
+        var username = inpName.val();
 
         var onresponse = function (resp, data) {
             if (resp.status !== 200) {
@@ -285,11 +267,22 @@
                 infoChangeName.removeClass("error");
                 infoChangeName.addClass("visible");
                 infoChangeName.text("Uporanbiško ime spremenjeno...");
+
+                // Set currentName to updated name and update placeholder for input
+                currentName.text(username);
+                inpName.attr("placeholder", username);
+                // Clear input value
+                inpName.val("");
+
+                // Fade text after n seconds
+                setTimeout(function() {
+                    infoChangeName.removeClass("visible");
+                }, 3500)
             }
         };
 
         // submit new name
-        sendUserUpdate(fields, onresponse)
+        sendUserUpdate({ "username": username }, onresponse)
     })
 
 

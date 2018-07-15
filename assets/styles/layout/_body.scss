@@ -191,7 +191,7 @@
             text-align: center;
             
             opacity: 0;
-            @include transition(.1s);
+            @include transition(.3s ease);
             &.visible {
                 opacity: 1;
             }
