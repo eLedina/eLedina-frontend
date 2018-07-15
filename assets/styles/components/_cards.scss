@@ -1,0 +1,96 @@
+// CARDS
+// inspired by https://materializecss.com/cards.html
+
+.card {
+    width: 100%;
+    height: auto;
+    
+    display: flex;
+    flex-direction: column;
+    
+    margin: 15px;
+    border-radius: 2px;
+    
+    // default colors
+    border: 2px solid darken($color-blue, 20);
+    
+    //////////////
+    // SUB-ITEMS
+    //////////////
+    .title {
+        padding: 3px 5px 0 6px;
+        font-weight: $bold;
+        font-family: $font-primary $font-secondary $font-tertiary;
+        font-size: 1.5em;
+        
+        letter-spacing: 0.5px;
+        
+        height: auto;
+        
+        // default colors
+        background-color: transparentize(mix($color-beige, $color-blue, 8%), 0.65);
+        border-bottom: 1px solid transparentize(lighten($color-black, 15), 0.5);
+    }
+    
+    .content {
+        height: auto;
+        
+        padding: 22px 18px;
+        
+        font-family: $font-secondary $font-tertiary;
+        font-size: 1em;
+        
+        // default colors
+        background-color: transparentize(mix($color-beige, $color-blue, 8%), 0.8);
+    }
+    
+    .bottom {
+        display: flex;
+        padding: 2px 15px;
+        
+        height: auto;
+        background-color: transparentize(mix($color-beige, $color-blue, 12%), 0.8);
+    }
+    
+    //////////////////
+    // COLOR THEMES
+    //////////////////
+    &.green {
+        border: 2px solid darken($color-fern-green, 20);
+        .title {
+            background-color: transparentize(mix($color-beige, $color-fern-green, 8%), 0.65);
+        }
+        .content {
+            background-color: transparentize(mix($color-beige, $color-fern-green, 8%), 0.8);
+        }
+        .bottom {
+            background-color: transparentize(mix($color-beige, $color-fern-green, 12%), 0.8);
+        }
+    }
+    
+    &.dark-green {
+        border: 2px solid darken($color-jungle-green, 20);
+        .title {
+            background-color: transparentize(mix($color-beige, $color-jungle-green, 30%), 0.6);
+        }
+        .content {
+            background-color: transparentize(mix($color-beige, $color-jungle-green, 30%), 0.75);
+        }
+        .bottom {
+            background-color: transparentize(mix($color-beige, $color-jungle-green, 12%), 0.8);
+        }
+    }
+    
+    &.red {
+        border: 2px solid darken($color-red, 30);
+        .title {
+            background-color: transparentize(mix($color-beige, $color-red, 6%), 0.7);
+        }
+        .content {
+            background-color: transparentize(mix($color-beige, $color-red, 6%), 0.85);
+        }
+        .bottom {
+            background-color: transparentize(mix($color-beige, $color-red, 12%), 0.8);
+        }
+    }
+}

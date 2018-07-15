@@ -4,42 +4,55 @@
 .btn {
     &__main {
         padding: 5px 15px;
+        margin: 5px;
         border-radius: 2px;
+        
+        width: auto;
+        
         display: flex;
-        font-family: $font-secondary, $font-tertiary;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 3px 3px transparentize($color-black, 0.8);
+        
+        font-family: $font-secondary, $font-tertiary;
         letter-spacing: 1px;
         font-weight: bold;
-        margin: 5px;
+        
+        box-shadow: 0 3px 3px transparentize($color-black, 0.8);
         cursor: pointer;
         @include transition();
 
         svg {
             margin-right: 10px;
         }
-
-
-        &.green {
-            background-color: lighten($color-fern-green, 10);
-            color: $color-white;
-            path {
-                fill: $color-white;
-            }
-        }
-        &.blue {
-            background-color: lighten($color-blue, 10);
-            color: $color-white;
-            path {
-                fill: $color-white;
-            }
-        }
-
+        
         &:hover {
             box-shadow: 0 3px 5px transparentize($color-black, 0.8);
             //transform: scale(1.1);
             filter: brightness(120%);
         }
+        
+        // default color scheme
+        color: $color-white;
+        path {
+            fill: $color-white;
+        }
+
+        //////////////////
+        // COLOR SCHEMES
+        //////////////////
+        &.green {
+            background-color: lighten($color-fern-green, 10);
+        }
+        &.dark-green {
+            background-color: lighten($color-jungle-green, 25);
+        }
+        &.blue {
+            background-color: lighten($color-blue, 10);
+        }
+        &.red {
+            background-color: lighten($color-red, 10);
+        }
+
+        
     }
 }

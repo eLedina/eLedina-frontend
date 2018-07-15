@@ -1,40 +1,47 @@
 {% import "macros/svgs.html" as svgs %}
 
 <nav class="header flex flex--column">
-    <div class="burger">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="flex flex--row">
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- displays logged in user -->
+    <div class="flex flex--column user" id="userInfo">
+        <span class="text-uppercase user--as">prijavljen kot</span>
+        <span class="user--name">{{ g.user["username"] }}</span>
+        <div class="flex flex--row flex--around user--actions">
+            <a href="settings" id="settings">{{ svgs.settings_box() }}</a>
+            <a href="logout" id="logout">{{ svgs.logout_variant() }}</a>
+        </div>
     </div>
 
-    <div class="">
-        <a href="/home.html">
+    <div class="links">
+        <a href="home">
             {{ svgs.home() }}
             <span>Domov</span>
         </a>
-        <a href="learning.html">
+        <a href="learning">
             {{ svgs.ucenje() }}
             <span>Učenje</span>
         </a>
-        <a href="news.html">
+        <a href="news">
             {{ svgs.dogodki() }}
             <span>Dogodki</span>
         </a>
-        <a href="/oral_exam.html">
+        <a href="oral_exam">
             {{ svgs.seznami() }}
             <span>Seznami</span>
         </a>
-        <a href="/blog_mainpage.html">
+        <a href="blog_mainpage">
             {{ svgs.blog() }}
             <span>Blog</span>
         </a>
-        <a href="/contacts.html">
+        <a href="contacts">
             {{ svgs.contact() }}
             <span>Kontakti</span>
-        </a>
-        <a href="settings.html">
-            {{ svgs.settings() }}
-            <span>Nastavitve</span>
         </a>
     </div>
 </nav>

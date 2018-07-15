@@ -1,4 +1,4 @@
-{% extends "skeletons/base02.html" %}
+{% extends "skeletons/base_noheader.html" %}
 {% import "macros/svgs.html" as svgs %}
 {% block title %}Prijava{% endblock %}
 {% block content %}
@@ -12,7 +12,7 @@
             <form id="accesibilityForm" class="mb30 mt10 flex flex--column flex--middle">
                 <div class="input" id="inp">
                     <input type="text" name="primary" id="inputPrimary" required>
-                    <label>Uporabniško ime / E-poštni naslov</label>
+                    <label>Uporabniško ime / E-pošta</label>
                     <span class="err">Vpiši uporabniško ime ali e-poštni naslov!</span>
                 </div>
                 <div class="input" id="inp">
@@ -114,8 +114,25 @@
                         successBox.removeClass("visible");
                     }
                     else {
-                        errorBox.removeClass("visible");
-                        successBox.addClass("visible");
+                        // Set token
+                        var token = data["token"];
+                        if (typeof token === "undefined") {
+                            throw "Error: token is undefined, even though status was 200 OK"
+                        }
+
+                        // User must have consented to cookies
+                        try {
+                            setUserToken(token);
+
+                            // Show success text box
+                            errorBox.removeClass("visible");
+                            successBox.addClass("visible");
+                        } catch {
+                            // user has not clicked accept
+                            successBox.removeClass("visible");
+                            errorBox.text("Niste še se strinjali z našimi piškotki! Pred prijavo ali registracijo prosimo potrdite svoje strinjanje.");
+                            errorBox.addClass("visible");
+                        }
                     }
             })
         }

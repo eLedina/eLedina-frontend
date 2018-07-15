@@ -39,7 +39,8 @@ gulp.task('styles', function() {
                 'not dead',
                 '> 0.5%',
                 'opera 12'
-            ]
+            ],
+            grid: true
         }))
         .pipe(cssNano())
         .pipe(sourcemaps.write('sourcemaps'))

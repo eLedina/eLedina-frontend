@@ -26,32 +26,43 @@ function validateEmail(email) {
 
 
 // AJAX helper
+function parseAjaxOptions(type, url, data, callback) {
+    // Check arguments
+    if (typeof type === "undefined") { type = "POST" }
+    if (typeof url === "undefined") { throw "Missing url" }
 
-function ledinaAjax(type, url, data, callback, kwargs) {
-    if (typeof type === "undefined") {
-        type = "POST"
-    }
-    if (typeof url === "undefined") {
-        throw "Missing url"
-    }
+    // Automatically set Authorization header if logged in
+    var token = getUserToken();
+    var ajaxHeaders;
+    if (typeof token !== "undefined") {
+        ajaxHeaders = { "Authorization": token };
+    } else { ajaxHeaders = {} }
 
-    var ajaxOptions = {
+    return {
         type: type,
         url: url,
         contentType: "application/json",
         async: "false",
         data: JSON.stringify(data),
+        headers: ajaxHeaders,
         // disable json parsing
         dataType: "text",
 
         // attach callback function
         complete: callback
     };
+}
 
-    // this applies additional options
+function ledinaAjax(type, url, data, callback, kwargs) {
+    var ajaxOptions = parseAjaxOptions(type, url, data, callback);
+
+    // this applies additional options via kwargs
     if (typeof kwargs !== "undefined") {
         ajaxOptions = Object.assign({}, ajaxOptions, kwargs)
     }
+
+    // Show debug data before sending
+    console.debug("[ajax] Sending ajax request: type="+type+", url="+url+", token="+(typeof getUserToken() !== "undefined" ? "yes" : "no"));
 
     $.ajax(ajaxOptions)
 }

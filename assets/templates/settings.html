@@ -6,26 +6,77 @@
 <div class="flex flex--column flex--middle">
     <h1>Nastavitve</h1>
 
-    <div class="body__settings mt60">
-        <div class="input flex flex--middle mb30">
-            <p>Spremeni email:</p>
-            <input type="text" name="" value="">
-        </div>
-        <div class="input flex flex--middle mb30">
-            <p>Spremeni geslo:</p>
-            <input type="text" name="" value="">
-        </div>
-        <div class="flex flex--middle mb30 input">
-            <p>Zahtevaj spremembo razreda*:</p>
-            <input type="text" name="" value="">
-            <button type="button" name="button" class="btn__main green">POŠLJI ZAHTEVO</button>
-        </div>
-        <div class="">
-            <p>Tvoj opis samega sebe:</p>
-            <textarea class="textarea" name="name" rows="8" cols="80">
-            </textarea>
-        </div>
-        <button type="button" name="button" class="btn__main green">SHRANI NASTAVITVE</button>
+    <div class="body__settings mt60 flex flex--column flex--middle">
+        <!-- TODO cards -->
+
+        <form class="card">
+            <div class="title">Spremeni ime</div>
+            <div class="content aligner">
+                <p class="item">Sedanje ime:</p>
+                <span class="text-bold pl20 item" id="currentName">{{ g.user["username"] }}</span>
+
+                <p class="item nr">Novo ime:</p>
+                <div class="input mb10 item">
+                    <input type="text" placeholder="{{ g.user["username"] }}" id="inpNewName" autocomplete="new-username" required>
+                    <span class="err">Neveljavno uporabniško ime!</span>
+                </div>
+            </div>
+            <div class="bottom flex--column flex--center">
+                <span class="btn__main blue" id="nameChangeBtn">Spremeni ime</span>
+                <span class="infoBox" id="nameChangeSpan">Ime spremenjeno.</span>
+            </div>
+        </form>
+
+        <form class="card green">
+            <div class="title">Spremeni e-poštni naslov</div>
+            <div class="content aligner">
+                <p class="item">Sedanji naslov:</p>
+                <span class="text-bold pl20 item" id="currentEmail">{{ g.user["email"] }}</span>
+
+
+                <p class="item nr">Novi naslov:</p>
+                <!-- prefill placeholder -->
+                <div class="input mb10 item">
+                    <input type="email" placeholder="{{ g.user["email"] }}" id="inpNewEmail" autocomplete="new-email" required>
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+            </div>
+            <div class="bottom flex--column flex--center">
+                <span class="btn__main green" id="emailChangeBtn">Spremeni e-poštni naslov</span>
+                <span class="infoBox" id="emailChangeSpan">E-poštni naslov spremenjen.</span>
+            </div>
+        </form>
+
+        <form class="card dark-green">
+            <div class="title">Spremeni geslo</div>
+            <!-- needed to align inputs -->
+            <div class="content aligner">
+                <!-- hidden username field for accesibility: https://goo.gl/9p2vKq-->
+                <input type="text" autocomplete="username" style="display: none">
+
+                <p class="item">Sedanje geslo: </p>
+                <div class="input mb10 item">
+                    <input type="password" id="inpPassCurrent" placeholder="..." autocomplete="current-password">
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+                
+                <p class="item nr">Novo geslo: </p>
+                <div class="input mb10 item" id="inpNewEmail">
+                    <input type="password" id="inpPassNew" placeholder="..." autocomplete="new-password">
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+                
+                <p class="item nr">Ponovitev gesla: </p>
+                <div class="input mb10 item" id="inpNewEmail">
+                    <input type="password" id="inpPassConfirm" placeholder="..." autocomplete="new-password">
+                    <span class="err">Neveljaven naslov!</span>
+                </div>
+            </div>
+            <div class="bottom flex--column flex--center">
+                <span class="btn__main dark-green" id="passChangeBtn">Spremeni geslo</span>
+                <span class="infoBox" id="passChangeSpan">Geslo spremenjeno.</span>
+            </div>
+        </form>
     </div>
 
     <div class="body__settings--footnote mt30">
@@ -34,4 +85,321 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const inpName = $("#inpNewName")
+        , inpEmail = $("#inpNewEmail")
+        , inpPassCurrent = $("#inpPassCurrent")
+        , inpPassNew = $("#inpPassNew")
+        , inpPassConfirm = $("#inpPassConfirm");
+
+    const spanName = $("#inpNewName ~ span.err")
+        , spanEmail = $("#inpNewEmail ~ span.err")
+        , spanPassCurrent = $("#inpPassCurrent ~ span.err")
+        , spanPassNew = $("#inpPassNew ~ span.err")
+        , spanPassConfirm = $("#inpPassConfirm ~ span.err");
+
+    const btnChangeName = $("#nameChangeBtn")
+        , btnChangeEmail = $("#emailChangeBtn")
+        , btnChangePass = $("#passChangeBtn");
+
+    const infoChangeName = $("#nameChangeSpan")
+        , infoChangeEmail = $("#emailChangeSpan")
+        , infoChangePass = $("#passChangeSpan");
+
+    const currentName = $("#currentName")
+        , currentEmail = $("#currentEmail");
+
+
+    function checkNameValidity() {
+        // CHANGE NAME
+        var nameLen = inpName.val().length;
+        if (nameLen !== 0 && nameLen < MIN_USERNAME_LEN) {
+            spanName.text("Prekratko uporabniško ime (minimum " + MIN_USERNAME_LEN + ").");
+            inpName.addClass("invalid");
+        }
+        else if (nameLen > MAX_USERNAME_LEN) {
+            spanName.text("Predolgo uporabniško ime (maksimum " + MAX_USERNAME_LEN + ").");
+            inpName.addClass("invalid");
+        }
+        else {
+            inpName.removeClass("invalid");
+        }
+    }
+
+    function checkEmailValidity() {
+        // CHANGE EMAIL
+        var email = inpEmail.val(),
+            emailLen = email.length;
+
+        if (emailLen !== 0 && (!validateEmail(email)) || emailLen < MIN_EMAIL_LEN) {
+            spanEmail.text("Nepravilen e-poštni naslov.");
+            inpEmail.addClass("invalid");
+        }
+        else if (emailLen > MAX_EMAIL_LEN) {
+            spanEmail.text("Predolg e-poštni naslov.");
+            inpEmail.addClass("invalid");
+        }
+        else {
+            inpEmail.removeClass("invalid");
+        }
+    }
+
+    function checkPasswordValidity() {
+        // CHANGE PASSWORD
+        var passCurrent = inpPassCurrent.val(),
+            passNew = inpPassNew.val(),
+            passConfirm = inpPassConfirm.val();
+
+        var lenCurrent = passCurrent.length,
+            lenNew = passNew.length,
+            lenConfirm = passConfirm.length;
+
+        // Current password
+        if (lenCurrent !== 0 && lenCurrent < MIN_PASSWORD_LEN) {
+            spanPassCurrent.text("Prekratko geslo (vsaj " + MIN_PASSWORD_LEN + " znakov).");
+            inpPassCurrent.addClass("invalid");
+        }
+        else if (lenCurrent > MAX_PASSWORD_LEN) {
+            spanPassCurrent.text("Predolgo geslo (vsaj " + MAX_PASSWORD_LEN + " znakov).");
+            inpPassCurrent.addClass("invalid");
+        }
+        else {
+            inpPassCurrent.removeClass("invalid");
+        }
+
+        // New password
+        if (lenNew !== 0 && lenNew < MIN_PASSWORD_LEN) {
+            spanPassNew.text("Prekratko geslo (vsaj " + MIN_PASSWORD_LEN + " znakov).");
+            inpPassNew.addClass("invalid");
+        }
+        else if (lenNew > MAX_PASSWORD_LEN) {
+            spanPassNew.text("Predolgo geslo (vsaj " + MAX_PASSWORD_LEN + " znakov).");
+            inpPassNew.addClass("invalid");
+        }
+        else {
+            inpPassNew.removeClass("invalid");
+        }
+
+        // Confirm password
+        if (lenConfirm !== 0 && lenConfirm < MIN_PASSWORD_LEN) {
+            spanPassConfirm.text("Prekratko geslo (vsaj " + MIN_PASSWORD_LEN + " znakov).");
+            inpPassConfirm.addClass("invalid");
+        }
+        else if (lenConfirm > MAX_PASSWORD_LEN) {
+            spanPassConfirm.text("Predolgo geslo (vsaj " + MAX_PASSWORD_LEN + " znakov).");
+            inpPassConfirm.addClass("invalid");
+        }
+        else {
+            inpPassConfirm.removeClass("invalid");
+        }
+
+        // Check that passwords match
+        if (passNew !== passConfirm) {
+            spanPassConfirm.text("Gesli se ne ujemata.");
+            inpPassConfirm.addClass("invalid");
+        }
+        else {
+            inpPassConfirm.removeClass("invalid");
+        }
+    }
+
+    const fnValidateName = function() { checkNameValidity() },
+          fnValidateEmail = function() { checkEmailValidity() },
+          fnValidatePassword = function() { checkPasswordValidity() };
+
+    inpName.focusout(fnValidateName);
+    inpEmail.focusout(fnValidateEmail);
+    inpPassCurrent.focusout(fnValidatePassword);
+    inpPassNew.focusout(fnValidatePassword);
+    inpPassConfirm.focusout(fnValidatePassword);
+
+    // Wrapper for /api/user PATCH call
+    function sendUserUpdate(fields, callback) {
+        var method = "PATCH",
+            url = "{{ url_for('api.user_manage') }}";
+
+        ledinaAjax(
+            method, url, fields, function (resp) {
+                console.log("User update sent! (status code " + resp.status + ")");
+                var data = JSON.parse(resp.responseText);
+
+                callback(resp, data);
+            }
+        )
+    }
+
+    // USERNAME CHANGE
+    btnChangeName.click(function () {
+        // check if invalid
+        if (inpName.hasClass("invalid")) {
+            return;
+        }
+        var username = inpName.val();
+
+        var onresponse = function (resp, data) {
+            if (resp.status !== 200) {
+                // There was an error
+
+                // 403 Forbidden
+                if (resp.status === 403) {
+                    if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
+                        // Wrong passwordConfirm
+                        // impossible in name update
+                        throw "This is impossible, WRONG_LOGIN_INFO on name update?"
+                    }
+                    else if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
+                        // Username already taken
+                        infoChangeName.text("Uporabniško je že zasedeno.");
+                        infoChangeName.addClass("visible error");
+                    }
+                }
+                else if (resp.status === 400) {
+                    if (data.status === StatusTypes.INVALID_ARGUMENT) {
+                        // One of the arguments was invalid
+                        infoChangeName.text("Uporabniško ime ne ustreza zahtevam!?");
+                        infoChangeName.addClass("visible error");
+                    }
+                }
+            }
+            else {
+                infoChangeName.removeClass("error");
+                infoChangeName.addClass("visible");
+                infoChangeName.text("Uporanbiško ime spremenjeno.");
+
+                // Set currentName to updated name and update placeholder for input
+                currentName.text(username);
+                inpName.attr("placeholder", username);
+                // Clear input value
+                inpName.val("");
+
+                // Fade text after n seconds
+                setTimeout(function() {
+                    infoChangeName.removeClass("visible");
+                }, 3500)
+            }
+        };
+
+        // submit new name
+        sendUserUpdate({ "username": username }, onresponse);
+    });
+
+    // EMAIL CHANGE
+    btnChangeEmail.click(function() {
+        if (inpEmail.hasClass("invalid")) {
+            return;
+        }
+        var email = inpEmail.val();
+
+        var onresponse = function(resp, data) {
+            if (resp.status !== 200) {
+                // There was an error
+
+                // 403 Forbidden
+                if (resp.status === 403) {
+                    if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
+                        throw "This is impossible, WRONG_LOGIN_INFO on email update?"
+                    }
+                    else if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
+                        // Email already registered
+                        infoChangeEmail.text("Ta e-poštni naslov je že registriran.");
+                        infoChangeEmail.addClass("visible error");
+                    }
+                }
+                else if (resp.status === 400) {
+                    if (data.status === StatusTypes.INVALID_ARGUMENT) {
+                        // One of the arguments was invalid
+                        infoChangeEmail.text("E-poštni naslov ne ustreza zahtevam!?");
+                        infoChangeEmail.addClass("visible error");
+                    }
+                }
+            }
+            else {
+                infoChangeEmail.removeClass("error");
+                infoChangeEmail.addClass("visible");
+
+                infoChangeEmail.text("E-poštni naslov spremenjen.");
+
+                // Update email and clear input
+                currentEmail.text(email);
+                inpEmail.attr("placeholder", email);
+                inpEmail.val("");
+
+                // Fade text
+                setTimeout(function() {
+                    infoChangeEmail.removeClass("visible");
+                }, 3500)
+            }
+        };
+
+        // submit new email
+        sendUserUpdate({ "email": email }, onresponse);
+    });
+
+    // PASSWORD CHANGE
+    btnChangePass.click(function () {
+        // check field validity
+        if (inpPassCurrent.hasClass("invalid") || inpPassNew.hasClass("invalid") || inpPassConfirm.hasClass("invalid")) {
+            return;
+        }
+
+        var currentPass = inpPassCurrent.val(),
+            newPass = inpPassNew.val();
+
+        var onresponse = function (resp, data) {
+            if (resp.status !== 200) {
+                // There was an error
+
+                // 403 Forbidden
+                if (resp.status === 403) {
+                    if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
+                        infoChangePass.text("Nepravilno (sedanje) geslo!");
+                        infoChangePass.addClass("visible error");
+                    }
+                    else if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
+                        // username or email taken
+                        throw "Impossible, USER_ALREADY_EXISTS can't happen on password update?!";
+                    }
+                }
+                else if (resp.status === 400) {
+                    if (data.status === StatusTypes.INVALID_ARGUMENT) {
+                        // One of the arguments was invalid
+                        infoChangePass.text("Eden od vnosov je nepravilen!?");
+                        infoChangePass.addClass("visible error");
+                    }
+                }
+            }
+            else {
+                infoChangePass.removeClass("error");
+                infoChangePass.addClass("visible");
+
+                infoChangePass.text("Geslo spremenjeno.");
+
+                // Clear all inputs
+                inpPassCurrent.val("");
+                inpPassNew.val("");
+                inpPassConfirm.val("");
+
+                // Fade text
+                setTimeout(function() {
+                    infoChangePass.removeClass("visible");
+                }, 3500)
+            }
+        };
+
+        // submit new password
+        var payload = {
+            "password": newPass,
+            "passwordCurrent": currentPass
+        };
+
+        sendUserUpdate(payload, onresponse);
+    })
+
+
+
+
+</script>
 {% endblock %}

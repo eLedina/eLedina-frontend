@@ -34,10 +34,10 @@ function setUserToken(token) {
         throw "User has not consented to cookies!"
     }
 
-    Cookies.set("accessToken", token, { expires: 7 })
+    Cookies.set("accessToken", token, { expires: 14 })
 }
 
-function getUserToken(token) {
+function getUserToken() {
     // Verify that user has agreed to cookies
     if (!userHasConsented()) {
         throw "User has not consented to cookies!"
