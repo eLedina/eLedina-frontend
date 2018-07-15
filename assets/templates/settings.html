@@ -282,7 +282,58 @@
         };
 
         // submit new name
-        sendUserUpdate({ "username": username }, onresponse)
+        sendUserUpdate({ "username": username }, onresponse);
+    });
+
+    btnChangeEmail.click(function() {
+        if (inpEmail.hasClass("invalid")) {
+            return;
+        }
+        var email = inpEmail.val();
+
+        var onresponse = function(resp, data) {
+            if (resp.status !== 200) {
+                // There was an error
+
+                // 403 Forbidden
+                if (resp.status === 403) {
+                    if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
+                        throw "This is impossible, WRONG_LOGIN_INFO on email update?"
+                    }
+                    else if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
+                        // Email already registered
+                        infoChangeEmail.text("Ta e-poštni naslov je že registriran.");
+                        infoChangeEmail.addClass("visible error");
+                    }
+                }
+                else if (resp.status === 400) {
+                    if (data.status === StatusTypes.INVALID_ARGUMENT) {
+                        // One of the arguments was invalid
+                        infoChangeEmail.text("E-poštni naslov ne ustreza zahtevam!?");
+                        infoChangeEmail.addClass("visible error");
+                    }
+                }
+            }
+            else {
+                infoChangeEmail.removeClass("error");
+                infoChangeEmail.addClass("visible");
+
+                infoChangeEmail.text("E-poštni naslov spremenjen.");
+
+                // Update email and clear input
+                currentEmail.text(email);
+                inpEmail.attr("placeholder", email);
+                inpEmail.val("");
+
+                // Fade text
+                setTimeout(function() {
+                    infoChangeEmail.removeClass("visible");
+                }, 3500)
+            }
+        };
+
+        // submit new email
+        sendUserUpdate({ "email": email }, onresponse);
     })
 
 
