@@ -11,7 +11,7 @@
     <!-- displays logged in user -->
     <div class="flex flex--column user" id="userInfo">
         <span class="text-uppercase user--as">prijavljen kot</span>
-        <span class="user--name">{{ g.user["name"] }}</span>
+        <span class="user--name">{{ g.user["username"] }}</span>
         <div class="flex flex--row flex--around user--actions">
             <a href="settings" id="settings">{{ svgs.settings_box() }}</a>
             <a href="logout" id="logout">{{ svgs.logout_variant() }}</a>
