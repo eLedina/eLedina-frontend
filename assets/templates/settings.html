@@ -216,6 +216,7 @@
     inpPassNew.focusout(fnValidatePassword);
     inpPassConfirm.focusout(fnValidatePassword);
 
+    // Wrapper for /api/user PATCH call
     function sendUserUpdate(fields, callback) {
         var method = "PATCH",
             url = "{{ url_for('api.user_manage') }}";
@@ -230,7 +231,7 @@
         )
     }
 
-
+    // USERNAME CHANGE
     btnChangeName.click(function () {
         // check if invalid
         if (inpName.hasClass("invalid")) {
@@ -266,7 +267,7 @@
             else {
                 infoChangeName.removeClass("error");
                 infoChangeName.addClass("visible");
-                infoChangeName.text("Uporanbiško ime spremenjeno...");
+                infoChangeName.text("Uporanbiško ime spremenjeno.");
 
                 // Set currentName to updated name and update placeholder for input
                 currentName.text(username);
@@ -285,6 +286,7 @@
         sendUserUpdate({ "username": username }, onresponse);
     });
 
+    // EMAIL CHANGE
     btnChangeEmail.click(function() {
         if (inpEmail.hasClass("invalid")) {
             return;
@@ -334,6 +336,66 @@
 
         // submit new email
         sendUserUpdate({ "email": email }, onresponse);
+    });
+
+    // PASSWORD CHANGE
+    btnChangePass.click(function () {
+        // check field validity
+        if (inpPassCurrent.hasClass("invalid") || inpPassNew.hasClass("invalid") || inpPassConfirm.hasClass("invalid")) {
+            return;
+        }
+
+        var currentPass = inpPassCurrent.val(),
+            newPass = inpPassNew.val();
+
+        var onresponse = function (resp, data) {
+            if (resp.status !== 200) {
+                // There was an error
+
+                // 403 Forbidden
+                if (resp.status === 403) {
+                    if (data.status === StatusTypes.WRONG_LOGIN_INFO) {
+                        infoChangePass.text("Nepravilno (sedanje) geslo!");
+                        infoChangePass.addClass("visible error");
+                    }
+                    else if (data.status === StatusTypes.USER_ALREADY_EXISTS) {
+                        // username or email taken
+                        throw "Impossible, USER_ALREADY_EXISTS can't happen on password update?!";
+                    }
+                }
+                else if (resp.status === 400) {
+                    if (data.status === StatusTypes.INVALID_ARGUMENT) {
+                        // One of the arguments was invalid
+                        infoChangePass.text("Eden od vnosov je nepravilen!?");
+                        infoChangePass.addClass("visible error");
+                    }
+                }
+            }
+            else {
+                infoChangePass.removeClass("error");
+                infoChangePass.addClass("visible");
+
+                infoChangePass.text("Geslo spremenjeno.");
+
+                // Clear all inputs
+                inpPassCurrent.val("");
+                inpPassNew.val("");
+                inpPassConfirm.val("");
+
+                // Fade text
+                setTimeout(function() {
+                    infoChangePass.removeClass("visible");
+                }, 3500)
+            }
+        };
+
+        // submit new password
+        var payload = {
+            "password": newPass,
+            "passwordCurrent": currentPass
+        };
+
+        sendUserUpdate(payload, onresponse);
     })
 
 
