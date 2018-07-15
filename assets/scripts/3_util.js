@@ -35,12 +35,21 @@ function ledinaAjax(type, url, data, callback, kwargs) {
         throw "Missing url"
     }
 
+    // Automatically set Authorization header if logged in
+    var token = getUserToken();
+    var ajaxHeaders;
+    if (typeof token !== "undefined") {
+        ajaxHeaders = { "Authorization": getUserToken() };
+    }
+    else { ajaxHeaders = {} }
+
     var ajaxOptions = {
         type: type,
         url: url,
         contentType: "application/json",
         async: "false",
         data: JSON.stringify(data),
+        headers: ajaxHeaders,
         // disable json parsing
         dataType: "text",
 
@@ -52,6 +61,9 @@ function ledinaAjax(type, url, data, callback, kwargs) {
     if (typeof kwargs !== "undefined") {
         ajaxOptions = Object.assign({}, ajaxOptions, kwargs)
     }
+
+    // Show debug data
+    console.debug("[ajax] Sending ajax request: type="+type+", url="+url+", token="+(token ? "yes" : "no"));
 
     $.ajax(ajaxOptions)
 }
