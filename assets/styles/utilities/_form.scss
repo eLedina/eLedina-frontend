@@ -34,6 +34,9 @@ textarea {
 		color: darken($color-beige, 20);
 		pointer-events:none;
 		@include transition();
+		
+		float: left;
+		white-space: nowrap;
 	}
 
 	input:focus ~ label, input:valid ~ label, label.alwaystop {

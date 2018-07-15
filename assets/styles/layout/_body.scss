@@ -12,7 +12,7 @@
 
     // login.html and register.html
     &__auth {
-        width: 400px;
+        width: 40%;
         
         &--fullh {
             height: 100vh;
@@ -188,10 +188,17 @@
         }
         
         .infoBox {
+            text-align: center;
+            
             opacity: 0;
             @include transition(.1s);
             &.visible {
                 opacity: 1;
+            }
+            
+            color: $color-fern-green;
+            &.error {
+                color: lighten($color-red, 10);
             }
         }
     }

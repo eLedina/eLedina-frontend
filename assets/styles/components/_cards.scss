@@ -46,6 +46,7 @@
     
     .bottom {
         display: flex;
+        padding: 2px 15px;
         
         height: auto;
         background-color: transparentize(mix($color-beige, $color-blue, 12%), 0.8);
