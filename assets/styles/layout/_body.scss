@@ -13,11 +13,11 @@
     // login.html and register.html
     &__auth {
         width: 40%;
-        
+
         &--fullh {
             height: 100vh;
         }
-        
+
         #errorBox, #successBox {
             visibility: hidden;
             height: 0;
@@ -26,7 +26,7 @@
                 height: auto;
             }
         }
-        
+
         #errorBox {
              color: $color-red;
         }
@@ -126,6 +126,12 @@
             }
         }
 
+        &--footer {
+            position: absolute;
+            bottom: 0;
+            font-size: 1.7em;
+        }
+
         &--red {
             color: $color-red !important;
         }
@@ -134,7 +140,7 @@
     // settings.html
     &__settings {
         width: 100%;
-        
+
         // font sizes
         p, span {
             font-size: 1.1em;
@@ -143,7 +149,7 @@
         input {
             width: auto;
         }
-        
+
         input::placeholder {
             color: transparentize($color-black, 0.6);
         }
@@ -159,12 +165,12 @@
                 font-size: 0.7em;
             }
         }
-        
+
         // make cards full width
         .card {
             width: 80%;
         }
-        
+
         // used for aligning inputs
         .aligner {
             // https://caniuse.com/#search=css%20grid%20layout
@@ -172,30 +178,30 @@
             grid-template-rows: auto;
             grid-template-columns: 1fr 1fr 2fr;
             grid-row-gap: 2px;
-            
-            
+
+
             .item {
                 // new row
                 &.nr {
                     grid-column-start: 1;
                 }
-                
+
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
             }
         }
-        
+
         .infoBox {
             text-align: center;
-            
+
             opacity: 0;
             @include transition(.3s ease);
             &.visible {
                 opacity: 1;
             }
-            
+
             color: $color-fern-green;
             &.error {
                 color: lighten($color-red, 10);
