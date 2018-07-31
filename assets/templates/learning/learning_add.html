@@ -3,8 +3,51 @@
 {% block title %}Učenje - Dodaj vprašanje{% endblock %}
 {% block content %}
 
-<div class="flex flex--column">
+<div class="flex flex--column flex--middle">
+    <h1>Učenje - Dodaj vprašanje</h1>
 
+    <form id="learningForm" class="body__learning--add">
+        <div class="flex">
+            <div class="input">
+                <input type="text" name="title" id="inputTitle" required>
+                <label>Naslov</label>
+            </div>
+            <div class="input flex flex--middle">
+                <select class="select" name="">
+                    <option value="">IZBERI KATEGORIJO</option>
+                    <option value="">Angleščina</option>
+                    <option value="">Biologija</option>
+                    <option value="">Filozofija</option>
+                    <option value="">Fizika</option>
+                    <option value="">Francoščina</option>
+                    <option value="">Geografija</option>
+                    <option value="">Glasba</option>
+                    <option value="">Informatika</option>
+                    <option value="">Italijanščina</option>
+                    <option value="">Kemija</option>
+                    <option value="">Likovna umetnost</option>
+                    <option value="">Matematika</option>
+                    <option value="">Nemščina</option>
+                    <option value="">Psihologija</option>
+                    <option value="">Slovenščina</option>
+                    <option value="">Španščina</option>
+                    <option value="">Športna vzgoja</option>
+                    <option value="">Umetnostna zgodovina</option>
+                    <option value="">Zgodovina</option>
+                </select>
+                <div class="checkbox">
+                    <label>Ostati hočem anonimen/a.
+                        <input type="checkbox" name="shit1" value="depresso">
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <textarea name="Text1" class="textarea" id="inputContent"></textarea>
+        </div>
+        <button type="button" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
+    </form>
 </div>
 
 {% endblock %}
