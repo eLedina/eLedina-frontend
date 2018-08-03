@@ -7,7 +7,7 @@
     <h1>Učenje - Dodaj vprašanje</h1>
 
     <form id="learningForm" class="body__learning--add">
-        <div class="flex">
+        <div class="flex flex--column">
             <div class="input">
                 <input type="text" name="title" id="inputTitle" required>
                 <label>Naslov</label>
@@ -35,12 +35,12 @@
                     <option value="">Umetnostna zgodovina</option>
                     <option value="">Zgodovina</option>
                 </select>
-                <div class="checkbox">
-                    <label>Ostati hočem anonimen/a.
-                        <input type="checkbox" name="shit1" value="depresso">
-                        <span></span>
-                    </label>
-                </div>
+            </div>
+            <div class="checkbox flex flex--middle">
+                <label>Ostati hočem anonimen/a.
+                    <input type="checkbox" name="shit1" value="depresso">
+                    <span></span>
+                </label>
             </div>
         </div>
         <div>
@@ -49,5 +49,11 @@
         <button type="button" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
     </form>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+
 
 {% endblock %}

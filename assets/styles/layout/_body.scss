@@ -136,6 +136,40 @@
             width: 60%;
         }
 
+        &--question {
+            width: 60%;
+            background-color: lighten($color-beige, 10);
+            box-shadow: 0 0 10px black;
+            padding: 10px;
+            margin-bottom: 50px;
+
+            h2 {
+                font-size: 1.5em;
+                text-align: center;
+            }
+        }
+
+        &--rating {
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        &--answer {
+            width: 50%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid black;
+
+            div {
+                padding: 0 10px;
+            }
+        }
+
+        &--approved {
+            background-color: lighten($color-fern-green, 40);
+        }
+
         &--red {
             color: $color-red !important;
         }
