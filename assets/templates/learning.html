@@ -84,6 +84,32 @@
         window.location = $(this).data("url")
     });
 
+    $(document).ready(function () {
+        var qpack = {};
+
+        ledinaAjax(
+            "GET", "{{ url_for('api.learning_get') }}", qpack,
+            function(response) {
+                console.log(response.status);
+                console.log(response.text);
+
+                var jsonified = JSON.parse(response.responseText);
+
+                for (var id in jsonified) {
+                    var array = jsonified[id];
+                    var epoch_date = array["date"];
+                    var title = array["title"];
+                    var subject = array["subject"];
+                    var status = array["status"]
+                    var myDate = new Date(epoch_date *1000);
+                    var date_str = myDate.toLocaleString();
+
+                    $(".table").append("<tr data-url=" + id + "><td>" + title + "</td><td>" + subject + "</td><td></td><td>" + date_str + "</td><td class='body__learning--red'>" + status + "</td></tr>")
+                }
+            }
+        )
+    });
+
 </script>
 
 {% endblock %}

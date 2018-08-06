@@ -13,7 +13,7 @@
                 <label>Naslov</label>
             </div>
             <div class="input flex flex--middle">
-                <select class="select" name="">
+                <select class="select" id="subjectInput">
                     <option value="">IZBERI KATEGORIJO</option>
                     <option value="">Angleščina</option>
                     <option value="">Biologija</option>
@@ -38,7 +38,7 @@
             </div>
             <div class="checkbox flex flex--middle">
                 <label>Ostati hočem anonimen/a.
-                    <input type="checkbox" name="shit1" value="depresso">
+                    <input type="checkbox" id="anonymousCheck">
                     <span></span>
                 </label>
             </div>
@@ -53,7 +53,66 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
 
+    var submitBtn = $("#submitBtn");
+    var titleField = $("#inputTitle");
+    var anonymous = $("#anonymousCheck");
+    var textField = $("#inputContent");
+    var converter = new showdown.Converter();
 
+    // Disables newlines
+    converter.setOption("omitExtraWLInCodeBlocks", "true");
+    // Turns links into ... LINKS!!1
+    converter.setOption("simplifiedAutoLink", "true");
+    converter.setOption("excludeTrailingPunctuationFromURLs", "true");
+    // Treats underscores in the middle as underscores, not bold text.
+    converter.setOption("literalMidWordUnderscores", "true");
+    // Sarcasm/edgy necessity (line through).
+    converter.setOption("strikethrough", "true");
+    // This one's obvious.
+    converter.setOption("tables", "true");
+    converter.setOption("tablesHeaderId", "true");
+    // Like shopping list - checks stuff.
+    converter.setOption("tasklists", "true");
+    // Removes annoying GitHub-doesn't-give-a-shit-about-line-breaks thingy.
+    converter.setOption("simpleLineBreaks", "true");
+    // Adds blessing from God.
+    converter.setOption("openLinksInNewWindow", "true");
+    // Emoji movie.
+    converter.setOption("emoji", "true");
+    // Underline.
+    converter.setOption("underline", "true");
 
+    submitBtn.click(function () {
+        var title = titleField.val();
+        var text = converter.makeHtml(textField.val());
+        var raw_date = new Date();
+        var date = Math.floor(raw_date.getTime() / 1000);
+        var subject = $("#subjectInput option:selected").text();
+
+        var question = {
+            "title" : title,
+            "content" : text,
+            "date" : date,
+            "subject": subject
+        }
+
+        if (title == "" || text == "") {
+            alert("Preden objaviš vnos, prosim, izpolni manjkajoče okence.");
+        } else {
+            ledinaAjax(
+                "POST", "{{ url_for('api.learning_new') }}", question,
+
+                function(response) {
+                    console.log("Poštar je odnesel paketek.");
+                    console.log(response.status);
+                    console.log(response.responseText);
+                }
+            );
+        }
+
+    });
+
+</script>
 {% endblock %}
