@@ -7,10 +7,10 @@
     <h1>Učenje</h1>
 
     <div class="body__learning--question">
-        <h2>HAHAHAHAH</h2>
-        <p><i>Grimpy, 7.8. 2018</i></p>
-        <div class="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <h2 id="qtitle"></h2>
+        <p id="data"><i></i></p>
+        <div id="qcontent">
+            <p></p>
         </div>
     </div>
     <div class="body__learning--answer flex flex--middle body__learning--approved">
@@ -26,4 +26,36 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        var qtitle = $("#qtitle");
+        var qdata = $("#qdata");
+        var qcontent = $("#qcontent");
+
+        var id = window.location.search.replace("?id=", "");
+
+        ledinaAjax(
+            "GET", "{{ url_for('api.learning_get') }}", id,
+            function(response) {
+                console.log(response.status);
+                console.log(response.responseText);
+
+                var jsonified = JSON.parse(response.responseText);
+
+                var epoch_date = jsonified["date"];
+                var title = jsonified["title"];
+                var content = jsonified["content"];
+                var myDate = new Date(epoch_date *1000);
+                var date_str = myDate.toLocaleString();
+
+                qtitle.append(title);
+                qdata.append("<i>" + data_str + "</i>");
+                qcontent.append(content);
+            }
+        );
+    });
+</script>
 {% endblock %}

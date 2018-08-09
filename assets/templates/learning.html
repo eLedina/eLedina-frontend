@@ -56,13 +56,6 @@
                 <th>Datum</th>
                 <th>Status</th>
             </tr>
-            <tr data-url="#">
-                <td>Kaj je informatika?</td>
-                <td>Informatika</td>
-                <td>Gorazd</td>
-                <td>1. 7. 2018</td>
-                <td class="body__learning--red">NEODGOVORJENO</td>
-            </tr>
         </table>
     </div>
 
@@ -79,11 +72,6 @@
 {% block scripts %}
 
 <script>
-
-    $("tr").click(function () {
-        window.location = $(this).data("url")
-    });
-
     $(document).ready(function () {
         var qpack = {};
 
@@ -97,17 +85,22 @@
 
                 for (var id in jsonified) {
                     var array = jsonified[id];
+                    var true_id = id.replace("question:", "")
                     var epoch_date = array["date"];
                     var title = array["title"];
                     var subject = array["subject"];
-                    var status = array["status"]
+                    var status = array["status"];
                     var myDate = new Date(epoch_date *1000);
                     var date_str = myDate.toLocaleString();
 
-                    $(".table").append("<tr data-url=" + id + "><td>" + title + "</td><td>" + subject + "</td><td></td><td>" + date_str + "</td><td class='body__learning--red'>" + status + "</td></tr>")
+                    $(".table").append("<tr id='question-click' data-url=" + true_id + "><td>" + title + "</td><td>" + subject + "</td><td></td><td>" + date_str + "</td><td class='body__learning--red'>" + status + "</td></tr>")
                 }
             }
         )
+        $(".table").on("click","#question-click", function(){
+            console.log("aaaa");
+            window.location = "learning/learning_question_template.html?id=" + $(this).data("url")
+        });
     });
 
 </script>
