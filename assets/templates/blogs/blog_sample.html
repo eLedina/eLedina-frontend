@@ -41,13 +41,14 @@
                 var epoch_date = jsonified["date"];
                 var title = jsonified["title"];
                 var content = jsonified["content"];
+                var author = jsonified["author"];
                 // Epoch time to my time conversion
                 var myDate = new Date(epoch_date *1000);
                 var date_str = myDate.toLocaleString();
 
                 btitle.append(title);
                 bcontent.append(content);
-                bdata.append("<p>" + date_str + "</p>");
+                bdata.append("<p>" + author + ", " + date_str + "</p>");
                 // Necessary in case tables are present inside content
                 $("table").addClass( "table" );
             }

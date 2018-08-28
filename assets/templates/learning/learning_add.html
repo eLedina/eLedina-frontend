@@ -14,7 +14,7 @@
             </div>
             <div class="input flex flex--middle">
                 <select class="select" id="subjectInput">
-                    <option value="">IZBERI KATEGORIJO</option>
+                    <option value="kek">IZBERI KATEGORIJO</option>
                     <option value="">Angleščina</option>
                     <option value="">Biologija</option>
                     <option value="">Filozofija</option>
@@ -47,6 +47,7 @@
             <textarea name="Text1" class="textarea" id="inputContent"></textarea>
         </div>
         <button type="button" name="button" class="btn__main blue" id="submitBtn">OBJAVI</button>
+        <p style="display: none;color: green;" id="confirm">VPRAŠANJE JE BILO OBJAVLJENO.</p>
     </form>
 </div>
 
@@ -57,7 +58,6 @@
 
     var submitBtn = $("#submitBtn");
     var titleField = $("#inputTitle");
-    var anonymous = $("#anonymousCheck");
     var textField = $("#inputContent");
     var converter = new showdown.Converter();
 
@@ -90,17 +90,27 @@
         var raw_date = new Date();
         var date = Math.floor(raw_date.getTime() / 1000);
         var subject = $("#subjectInput option:selected").text();
+        var author = "{{ g.user['username'] }}"
+
+        if ($("#anonymousCheck").is(":checked")) {
+            author = "Anonimni uporabnik";
+            console.log(author);
+        }
 
         var question = {
             "title" : title,
             "content" : text,
             "date" : date,
-            "subject": subject
+            "subject": subject,
+            "author": author
         }
 
         if (title == "" || text == "") {
             alert("Preden objaviš vnos, prosim, izpolni manjkajoče okence.");
+        } else if ($("#subjectInput option:selected").val() == "kek") {
+            alert("Prosimo, izberi predmet, v povezavi s katerim je vprašanje.");
         } else {
+            $("#confirm").css("display", "block");
             ledinaAjax(
                 "POST", "{{ url_for('api.learning_new') }}", question,
 

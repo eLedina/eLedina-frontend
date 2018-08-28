@@ -90,10 +90,11 @@
                     var title = array["title"];
                     var subject = array["subject"];
                     var status = array["status"];
+                    var author = array["author"]
                     var myDate = new Date(epoch_date *1000);
                     var date_str = myDate.toLocaleString();
 
-                    $(".table").append("<tr id='question-click' data-url=" + true_id + "><td>" + title + "</td><td>" + subject + "</td><td></td><td>" + date_str + "</td><td class='body__learning--red'>" + status + "</td></tr>")
+                    $(".table").append("<tr id='question-click' data-url=" + true_id + "><td>" + title + "</td><td>" + subject + "</td><td>" + author + "</td><td>" + date_str + "</td><td class='body__learning--red'>" + status + "</td></tr>")
                 }
             }
         )
