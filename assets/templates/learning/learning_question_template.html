@@ -8,7 +8,7 @@
 
     <div class="body__learning--question">
         <h2 id="qtitle"></h2>
-        <p id="data"><i></i></p>
+        <p id="qdata"><i></i></p>
         <div id="qcontent">
             <p></p>
         </div>
@@ -40,10 +40,9 @@
         var qdata = $("#qdata");
         var qcontent = $("#qcontent");
 
-        var id = window.location.search.replace("?id=", "");
-
+        var id = window.location.search.replace("?id=", "").toString();
         ledinaAjax(
-            "GET", "{{ url_for('api.learning_get') }}", id,
+            "POST", "{{ url_for('api.learning_question') }}", id,
             function(response) {
                 console.log(response.status);
                 console.log(response.responseText);
@@ -56,9 +55,10 @@
                 var content = jsonified["content"];
                 var myDate = new Date(epoch_date *1000);
                 var date_str = myDate.toLocaleString();
+                var author = jsonified["author"];
 
                 qtitle.append(title);
-                qdata.append("<i>" + date_str + "</i>");
+                qdata.append("<i>" + author + ", " + date_str + "</i>");
                 qcontent.append(content);
             }
         );

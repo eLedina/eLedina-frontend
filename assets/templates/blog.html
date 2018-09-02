@@ -17,7 +17,6 @@
 <script>
     $(document).ready(function () {
         var bpack = {};
-        var url = "{{ url_for('api.blog_list') }}";
         var months = {
             1.: "Januar",
             2.: "Februar",
@@ -32,7 +31,7 @@
             11.: "November",
             12.: "December"
         };
-        ledinaAjax("GET", url, bpack,
+        ledinaAjax("GET", "{{ url_for('api.blog_list') }}", bpack,
             function(response) {
                 console.log("Poštar je odnesel paketek.");
                 console.log(response.status);
@@ -53,6 +52,8 @@
                     var year = date_array[2];
                     var month = date_array[1];
                     var day = date_array[0];
+                    id = id.replace("blog:", "")
+                    console.log(id);
 
 
                     var month_name

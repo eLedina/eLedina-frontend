@@ -28,10 +28,9 @@
         var bcontent = $("#content");
         // Since ID is stored in URL, it gets it from there
         var id = window.location.search.replace("?id=", "");
-        var url = "{{ url_for('api.blog_get') }}";
 
         ledinaAjax(
-            "POST", url, id,
+            "POST", "{{ url_for('api.blog_get') }}", id,
             function(response) {
                 console.log(response.status);
                 console.log(response.responseText);
